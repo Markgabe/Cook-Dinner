@@ -1,0 +1,3 @@
+rootProject.name = 'CookDinner'
+
+include ':app'
