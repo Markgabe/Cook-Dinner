@@ -18,11 +18,8 @@ export default class App extends Component<Props> {
           <Text style={styles.welcome}>Welcome to Cook Dinner App!</Text>
 
           <Image
-            style={{
-                width: 120,
-                height:120,
-            }}
-            source={require('./comida.png')}
+            style={styles.image}
+            source={require('./img/comida.png')}
           />
 
         </View>
@@ -35,20 +32,20 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#999',
   },
   welcome: {
-    fontSize: 25,
+    fontSize: 36,
     textAlign: 'center',
     margin: 10,
     paddingTop: 20,
     paddingBottom: 20,
+    flex: 1,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  image: {
+    //width: 120,
+    height: 120,
+    flex: 4,
+  }
 });
