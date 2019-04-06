@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Image, Button} from 'react-native';
 
@@ -15,19 +7,27 @@ export default class App extends Component<Props> {
     return (
 
         <View style={styles.container}>
-          <Text style={styles.welcome}>Welcome to Cook Dinner App!</Text>
+          <Text style={styles.welcome}>{message}</Text>
 
-          <Image
-            style={styles.image}
-            source={require('./img/comida.png')}
-          />
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.image}
+              source={require('./img/comida.png')}
+            />
+          </View>
+
+          <Text
+            style={{flex:10,
+          }}
+          ></Text>
 
         </View>
 
-  
     );
   }
 }
+
+const message = "Welcome to Cook Dinner App!";
 
 const styles = StyleSheet.create({
   container: {
@@ -35,17 +35,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#999',
   },
+
+  imageContainer: {
+      flex: 8,
+  },
+
   welcome: {
     fontSize: 36,
     textAlign: 'center',
     margin: 10,
     paddingTop: 20,
     paddingBottom: 20,
-    flex: 1,
+    flex: 3,
   },
   image: {
-    //width: 120,
-    height: 120,
-    flex: 4,
+    flex: 0.8,
+    resizeMode: 'contain',
   }
 });
