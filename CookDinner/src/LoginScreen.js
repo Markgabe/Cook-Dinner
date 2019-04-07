@@ -55,15 +55,9 @@ const validar = async (user, pass) => {
     })
   });
 
-  console.log(response);
-
-  await AsyncStorage.multiSet([
-    ['Access-Token', response.headers.map['Access-Token']],
-    ['Token-Type', response.headers.map['Token-Type']],
-    ['Client', response.headers.map['client']],
-    ['Uid', response.headers.map['uid']]
-  ]);
-
-  //alert(await AsyncStorage.multiGet(['Access-Token', 'Token-Type', 'Client', 'Uid']))
+  await AsyncStorage.setItem('Access-Token', response.headers.map['access-token']);
+  await AsyncStorage.setItem('Client', response.headers.map['client']);
+  await AsyncStorage.setItem('Token-Type', response.headers.map['token-type']);
+  await AsyncStorage.setItem('Uid', response.headers.map['uid']);
 
 }

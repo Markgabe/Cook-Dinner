@@ -67,14 +67,11 @@ const cadastrarReceita = async (name, description) => {
     })
   });
 
-  console.log(obj);
-
-  alert(JSON.stringify(response));
   console.log(response);
 
   await AsyncStorage.multiSet([
-    ['Access-Token', response.headers.map['Access-Token']],
-    ['Token-Type', response.headers.map['Token-Type']],
+    ['Access-Token', response.headers.map['access-token']],
+    ['Token-Type', response.headers.map['token-type']],
     ['Client', response.headers.map['client']],
     ['Uid', response.headers.map['uid']]
   ]);
