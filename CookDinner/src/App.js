@@ -9,10 +9,4 @@ const TabNavigator = createBottomTabNavigator({
   Cadastro: Register,
 });
 
-const validar = (x, y) => {
-
-  //codigo que valida o login
-
-};
-
 export default createAppContainer(TabNavigator);

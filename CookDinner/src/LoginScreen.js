@@ -6,7 +6,7 @@ export default class Login extends React.Component {
 
   constructor(props) {
       super(props);
-      this.state = { username: 'Username', password: 'Your password' };
+      this.state = { username: 'piroca@gmail.com', password: 'piroca123' };
     }
 
   render() {
@@ -55,6 +55,6 @@ const validar = async (user, pass) => {
     })
   });
 
-  alert(JSON.stringify(response));
+  alert(JSON.stringify(response.headers));
 
 }
