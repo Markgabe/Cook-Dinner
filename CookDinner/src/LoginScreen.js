@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Button, TextInput } from 'react-native';
+import { Text, View, Button, TextInput, AsyncStorage } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 export default class Login extends React.Component {
@@ -55,6 +55,35 @@ const validar = async (user, pass) => {
     })
   });
 
-  alert(JSON.stringify(response.headers));
+  //alert(JSON.stringify(response.headers.map['access-token']));
+
+  await AsyncStorage.multiSet([
+    ['Access-Token', response.headers.map['access-token']],
+    ['Token-Type', response.headers.map['token-type']],
+    ['Client', response.headers.map['client']],
+    ['Uid', response.headers.map['uid']]
+  ]);
+
+  //alert(await AsyncStorage.multiGet(['Access-Token', 'Token-Type', 'Client', 'Uid']))
 
 }
+
+storeData = async () => {
+  try {
+    await AsyncStorage.setItem('Piru', 'Pirocon.');
+  } catch (error) {
+    // Error saving data
+  }
+};
+
+retrieveData = async () => {
+  try {
+    const value = await AsyncStorage.getItem('Access-Token');
+    if (value !== null) {
+      // We have data!!
+      alert(value);
+    }
+  } catch (error) {
+    // Error retrieving data
+  }
+};
