@@ -1,5 +1,5 @@
 import React from 'react';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
-import TabNavigator from './Navigator';
+import RootStack from './InitNavigator';
 
-export default createAppContainer(TabNavigator);
+export default createAppContainer(RootStack);

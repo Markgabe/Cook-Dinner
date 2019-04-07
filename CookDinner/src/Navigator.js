@@ -6,7 +6,6 @@ import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 const TabNavigator = createBottomTabNavigator({
   Login: Login,
   Cadastro: Register,
-  Receitas: RecipeRegister
 });
 
 export default TabNavigator;
