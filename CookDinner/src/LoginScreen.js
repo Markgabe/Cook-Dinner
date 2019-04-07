@@ -55,7 +55,7 @@ const validar = async (user, pass) => {
     })
   });
 
-  alert(JSON.stringify(response));
+  console.log(response);
 
   await AsyncStorage.multiSet([
     ['Access-Token', response.headers.map['Access-Token']],
@@ -67,23 +67,3 @@ const validar = async (user, pass) => {
   //alert(await AsyncStorage.multiGet(['Access-Token', 'Token-Type', 'Client', 'Uid']))
 
 }
-
-storeData = async () => {
-  try {
-    await AsyncStorage.setItem('Piru', 'Pirocon.');
-  } catch (error) {
-    // Error saving data
-  }
-};
-
-retrieveData = async () => {
-  try {
-    const value = await AsyncStorage.getItem('Access-Token');
-    if (value !== null) {
-      // We have data!!
-      alert(value);
-    }
-  } catch (error) {
-    // Error retrieving data
-  }
-};

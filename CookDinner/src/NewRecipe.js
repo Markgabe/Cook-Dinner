@@ -46,35 +46,31 @@ const cadastrarReceita = async (name, description) => {
   const client = await AsyncStorage.getItem('Client');
   const uid = await AsyncStorage.getItem('Uid');
 
-  // const obj = {
-  //   'Content-Type': 'application/json; charset=utf-8',
-  //   'Accept': 'application/json; charset=utf-8',
-  //   'Access-Token': token,
-  //   'Token-Type': tokenType,
-  //   'client': client,
-  //   'uid': uid
-  // }
 
-  //alert(JSON.stringify(obj));
+  const obj = new Headers(
+    [['Content-Type', 'application/json; charset=utf-8'],
+    ['Accept', 'application/json; charset=utf-8'],
+    ['Access-Token', token],
+    ['Token-Type', tokenType],
+    ['client', client],
+    ['uid', uid]]
+  );
+
+  console.log(obj);
 
   const response = await fetch('https://receitas-dos-leks.herokuapp.com/register_recipe', {
     method: "POST",
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      'Accept': 'application/json; charset=utf-8',
-      'Access-Token': token,
-      'Token-Type': tokenType,
-      'client': client,
-      'uid': uid
-    }
-,
+    headers: obj,
     body: JSON.stringify({
         title: name,
         description: description
     })
   });
 
+  console.log(obj);
+
   alert(JSON.stringify(response));
+  console.log(response);
 
   await AsyncStorage.multiSet([
     ['Access-Token', response.headers.map['Access-Token']],
