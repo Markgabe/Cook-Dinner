@@ -41,30 +41,44 @@ export default class RecipeRegister extends React.Component {
 
 const cadastrarReceita = async (name, description) => {
 
-  const token = AsyncStorage.getItem('Access-Token');
-  const tokenType = AsyncStorage.getItem('Token-Type');
-  const client = AsyncStorage.getItem('Client');
-  const uid = AsyncStorage.getItem('Uid');
+  const token = await AsyncStorage.getItem('Access-Token');
+  const tokenType = await AsyncStorage.getItem('Token-Type');
+  const client = await AsyncStorage.getItem('Client');
+  const uid = await AsyncStorage.getItem('Uid');
 
-  const response = await fetch('https://receitas-dos-leks.herokuapp.com/recipes', {
+  // const obj = {
+  //   'Content-Type': 'application/json; charset=utf-8',
+  //   'Accept': 'application/json; charset=utf-8',
+  //   'Access-Token': token,
+  //   'Token-Type': tokenType,
+  //   'client': client,
+  //   'uid': uid
+  // }
+
+  //alert(JSON.stringify(obj));
+
+  const response = await fetch('https://receitas-dos-leks.herokuapp.com/register_recipe', {
     method: "POST",
     headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Token': token,
-        'Token-Type': tokenType,
-        'Client': client,
-        'Uid': uid
-    },
+      'Content-Type': 'application/json; charset=utf-8',
+      'Accept': 'application/json; charset=utf-8',
+      'Access-Token': token,
+      'Token-Type': tokenType,
+      'client': client,
+      'uid': uid
+    }
+,
     body: JSON.stringify({
-        email: name,
-        password: description
+        title: name,
+        description: description
     })
   });
 
+  alert(JSON.stringify(response));
+
   await AsyncStorage.multiSet([
-    ['Access-Token', response.headers.map['access-token']],
-    ['Token-Type', response.headers.map['token-type']],
+    ['Access-Token', response.headers.map['Access-Token']],
+    ['Token-Type', response.headers.map['Token-Type']],
     ['Client', response.headers.map['client']],
     ['Uid', response.headers.map['uid']]
   ]);

@@ -55,11 +55,11 @@ const validar = async (user, pass) => {
     })
   });
 
-  //alert(JSON.stringify(response.headers.map['access-token']));
+  alert(JSON.stringify(response));
 
   await AsyncStorage.multiSet([
-    ['Access-Token', response.headers.map['access-token']],
-    ['Token-Type', response.headers.map['token-type']],
+    ['Access-Token', response.headers.map['Access-Token']],
+    ['Token-Type', response.headers.map['Token-Type']],
     ['Client', response.headers.map['client']],
     ['Uid', response.headers.map['uid']]
   ]);
