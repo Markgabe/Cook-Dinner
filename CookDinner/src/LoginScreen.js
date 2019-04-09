@@ -1,44 +1,66 @@
 import React from 'react';
-import { Text, View, Button, TextInput, AsyncStorage } from 'react-native';
+import {
+  Text, View, TouchableHighlight, TextInput,
+  Image, StyleSheet , KeyboardAvoidingView, AsyncStorage
+} from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import styles from './styles';
 
-export default class Login extends React.Component {
+export default class Register extends React.Component {
+
+  static navigationOptions = { header: null };
 
   constructor(props) {
       super(props);
-      this.state = { username: 'piroca@gmail.com', password: 'piroca123' };
+      this.state = { username: '', password: '' };
     }
 
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text
-          style={{
-            fontSize: 30,
-          }}>Login</Text>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1, marginTop: 10, width: 150}}
-          onChangeText={(username) => this.setState({username})}
-          value={this.state.username}
-        />
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1, margin: 10, width: 150}}
-          onChangeText={(password) => this.setState({password})}
-          value={this.state.password}
-          secureTextEntry = {true}
-        />
-        <Button
-          style={{height: 40, width: 150}}
-          onPress={() => validar(this.state.username, this.state.password)}
-          title="Log in"
-          color="#841584"
-          accessibilityLabel="Log in"
-          />
-      </View>
+      //<KeyboardAvoidingView behavior="padding" style={{flex: 1,alignItems: 'center',justifyContent: 'center',}}>
+        <View style={styles.mainView}>
 
+          <View style={styles.topView}>
+            <Image source={require('./img/comida.png')} style={styles.image}/>
+            <Text style={styles.titleText}>Cook Dinner</Text>
+          </View>
+
+          <View style={{flex: 1, paddingTop: 60, alignItems: 'center'}}>
+
+            <View style={styles.textInputView}>
+
+              <TextInput style={styles.textInput}
+              placeholder="Username"
+              onChangeText={(username) => this.setState({username})}
+              value={this.state.username}
+              />
+
+              <TextInput style={styles.textInput}
+              placeholder="Password"
+              onChangeText={(password) => this.setState({password})}
+              value={this.state.password}
+              secureTextEntry = {true}
+              />
+
+            </View>
+
+            <View style= {styles.buttonView}>
+
+              <TouchableHighlight
+                style={styles.button}
+                onPress={() => validar(this.state.username, this.state.password)}
+                underlayColor='#fff'>
+                <Text style={styles.buttonText}>Log in</Text>
+              </TouchableHighlight>
+            </View>
+
+          </View>
+
+        </View>
+
+      //</KeyboardAvoidingView>
     );
   }
-
 }
 
 const validar = async (user, pass) => {

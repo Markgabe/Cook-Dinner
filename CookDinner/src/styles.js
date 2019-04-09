@@ -22,7 +22,7 @@ export default StyleSheet.create({
     borderRadius: 10,
   },
 
-  textInputView:{flex:1},
+  textInputView:{flex:0.6},
 
   image: {
     flex: 0.5,
