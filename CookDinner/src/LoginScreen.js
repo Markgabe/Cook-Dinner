@@ -17,17 +17,19 @@ export default class Register extends React.Component {
 
   render() {
     return (
-      //<KeyboardAvoidingView behavior="padding" style={{flex: 1,alignItems: 'center',justifyContent: 'center',}}>
-        <View style={styles.mainView}>
+      <KeyboardAvoidingView behavior="padding" style={{flex: 1, alignItems: 'center', backgroundColor: '#888'}}>
+        <View>
 
-          <View style={styles.topView}>
+          <View style={{alignItems: 'center', flex: 1, backgroundColor: '#AAA'}}>
             <Image source={require('./img/comida.png')} style={styles.image}/>
             <Text style={styles.titleText}>Cook Dinner</Text>
           </View>
 
-          <View style={{flex: 1, paddingTop: 60, alignItems: 'center'}}>
+          <View style={{alignItems: 'center', flex: 1,
+          paddingTop: 50
+        }}>
 
-            <View style={styles.textInputView}>
+            <View>
 
               <TextInput style={styles.textInput}
               placeholder="Username"
@@ -42,23 +44,25 @@ export default class Register extends React.Component {
               secureTextEntry = {true}
               />
 
+              <View style={styles.buttonView}>
+
+                <TouchableHighlight style={styles.button}
+                  onPress={() => validar(this.state.username, this.state.password)}
+                  underlayColor='#fff'>
+                  <Text style={styles.buttonText}>Login</Text>
+                </TouchableHighlight>
+
+              </View>
+
             </View>
 
-            <View style= {styles.buttonView}>
 
-              <TouchableHighlight
-                style={styles.button}
-                onPress={() => validar(this.state.username, this.state.password)}
-                underlayColor='#fff'>
-                <Text style={styles.buttonText}>Log in</Text>
-              </TouchableHighlight>
-            </View>
 
           </View>
 
         </View>
 
-      //</KeyboardAvoidingView>
+      </KeyboardAvoidingView>
     );
   }
 }

@@ -11,7 +11,6 @@ export default StyleSheet.create({
 
   textInput: {
     fontSize: 30,
-    flex: 1,
     backgroundColor: '#FFF',
     marginTop: 10,
     fontSize: 20,
@@ -44,23 +43,26 @@ export default StyleSheet.create({
   },
 
   buttonView: {
-    marginTop: 20,
+    marginTop: 30,
     alignSelf: 'stretch',
-    flex: 1
+    //flex: 1
   },
 
   button: {
-    flex: 0.2,
+    width: "100%",
+    height: 40,
     borderColor: 'gray',
     borderWidth: 2,
     borderRadius: 10,
-    backgroundColor: "#999",
-    justifyContent: 'center'
+    backgroundColor: "#000",
+    justifyContent: 'center',
+    alignSelf: 'center'
   },
 
   buttonText: {
     fontSize: 20,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    color: "#FFF"
   }
 
 });
