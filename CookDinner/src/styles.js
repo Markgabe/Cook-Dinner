@@ -23,6 +23,19 @@ export default StyleSheet.create({
 
   textInputView:{flex:0.6},
 
+  searchInput: {
+    fontSize: 20,
+    backgroundColor: '#FFF',
+    marginVertical: 10,
+    fontSize: 20,
+    width: 280,
+    height: 40,
+    textAlign: 'center',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 15,
+  },
+
   image: {
     flex: 0.5,
     resizeMode: 'contain',
