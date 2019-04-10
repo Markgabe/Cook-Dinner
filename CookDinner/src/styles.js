@@ -2,12 +2,6 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
 
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-
   titleText: {
     flex:0.5,
     fontSize: 40,
@@ -26,10 +20,9 @@ export default StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 2,
     borderRadius: 10,
-    padding: 0
   },
 
-  textInputView:{flex:1},
+  textInputView:{flex:0.6},
 
   image: {
     flex: 0.5,
@@ -44,21 +37,16 @@ export default StyleSheet.create({
   },
 
   mainView: {
-    alignItems: 'center',
-    backgroundColor: '#888',
     flex: 1,
-    height: '100%',
-    justifyContent: 'space-around',
-    left: 0,
-    position: 'absolute',
-    top: 0,
-    width: '100%'
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#888'
   },
 
   buttonView: {
     marginTop: 20,
     alignSelf: 'stretch',
-    flex: 1.3
+    flex: 1
   },
 
   button: {
@@ -66,19 +54,13 @@ export default StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 2,
     borderRadius: 10,
-    backgroundColor: "#000",
+    backgroundColor: "#999",
     justifyContent: 'center'
   },
 
   buttonText: {
     fontSize: 20,
-    alignSelf: 'center',
-    color: '#FFF'
-  },
-
-  instructions:{
-    fontSize: 20,
-    marginBottom: 10
+    alignSelf: 'center'
   }
 
 });
