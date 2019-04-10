@@ -1,12 +1,10 @@
 import React from 'react';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, Button } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import styles from './styles';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-const icon = <FontAwesome5 name={'comments'} solid/>
 
 export default class Register extends React.Component {
 
@@ -35,8 +33,9 @@ export default class Register extends React.Component {
                 />
 
                 <TouchableOpacity onPress={() => this.newRecipe()} style={{alignSelf:'center', marginLeft: 'auto', marginRight: 15 }}>
-                    <Icon name='comments' size={36} color='#FFF' />
+                    <Icon name='plus-circle' size={36} color='#FFF' />
                 </TouchableOpacity>
+
             </View>
 
             <View style={{fontSize: 30, fontWeight: 'bold', backgroundColor: 'Gray'}}>
