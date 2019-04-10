@@ -5,14 +5,41 @@ import {
 } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import styles from './styles';
+import Home from './Home';
 
-export default class Register extends React.Component {
+export default class Login extends React.Component {
 
   static navigationOptions = { header: null };
 
+
   constructor(props) {
       super(props);
-      this.state = { username: '', password: '' };
+      this.state = { username: '', password: ''};
+    }
+
+  async validar(user, pass) {
+
+      const response = await fetch('https://receitas-dos-leks.herokuapp.com/auth/sign_in', {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email: user,
+            password: pass
+        })
+      });
+
+      await AsyncStorage.setItem('Access-Token', response.headers.map['access-token']);
+      await AsyncStorage.setItem('Client', response.headers.map['client']);
+      await AsyncStorage.setItem('Token-Type', response.headers.map['token-type']);
+      await AsyncStorage.setItem('Uid', response.headers.map['uid']);
+
+      (response.status === 200) ? this.props.navigation.navigate("Home") : alert("Usuário inválido!");
+
+      console.log(AsyncStorage.getItem("Loged"));
+
     }
 
   render() {
@@ -47,15 +74,19 @@ export default class Register extends React.Component {
               <View style={styles.buttonView}>
 
                 <TouchableHighlight style={styles.button}
-                  onPress={() => validar(this.state.username, this.state.password)}
-                  underlayColor='#fff'>
+                  onPress={() => this.validar(this.state.username, this.state.password)}
+                  underlayColor='#222'>
                   <Text style={styles.buttonText}>Login</Text>
                 </TouchableHighlight>
 
               </View>
 
-            </View>
+              <View style={{flexDirection: 'row', marginTop: 20}}>
+              <Text style={{alignSelf: 'center', fontSize: 20}}>Não possui uma conta? </Text>
+              <Text style={{alignSelf: 'center', fontSize: 20}}>Clique!</Text>
+              </View>
 
+            </View>
 
 
           </View>
@@ -65,25 +96,5 @@ export default class Register extends React.Component {
       </KeyboardAvoidingView>
     );
   }
-}
-
-const validar = async (user, pass) => {
-
-  const response = await fetch('https://receitas-dos-leks.herokuapp.com/auth/sign_in', {
-    method: "POST",
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        email: user,
-        password: pass
-    })
-  });
-
-  await AsyncStorage.setItem('Access-Token', response.headers.map['access-token']);
-  await AsyncStorage.setItem('Client', response.headers.map['client']);
-  await AsyncStorage.setItem('Token-Type', response.headers.map['token-type']);
-  await AsyncStorage.setItem('Uid', response.headers.map['uid']);
 
 }
