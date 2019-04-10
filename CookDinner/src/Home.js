@@ -18,7 +18,6 @@ export default class Register extends React.Component {
       this.state = { search: '' };
     }
 
-
     render() {
         return (
         //Screen
