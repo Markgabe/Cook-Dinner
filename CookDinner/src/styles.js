@@ -10,7 +10,6 @@ export default StyleSheet.create({
   },
 
   textInput: {
-    fontSize: 30,
     backgroundColor: '#FFF',
     marginTop: 10,
     fontSize: 20,
@@ -31,8 +30,16 @@ export default StyleSheet.create({
 
   topView: {
     flex:1,
-    backgroundColor: '#AAA',
+    backgroundColor: '#FFF',
     alignItems: 'center'
+  },
+
+  bottomView: {
+    backgroundColor: '#AAA',
+    alignItems: 'center',
+    width: "100%",
+    height: "20%",
+    marginBottom: 80
   },
 
   mainView: {
@@ -63,6 +70,16 @@ export default StyleSheet.create({
     fontSize: 20,
     alignSelf: 'center',
     color: "#FFF"
+  },
+
+  textInput2: {
+    fontSize: 20,
+    backgroundColor: 'transparent',
+    marginTop: 20,
+    width: 300,
+    textAlign: 'left',
+    color: "#000"
+
   }
 
 });
