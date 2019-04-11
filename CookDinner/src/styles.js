@@ -55,6 +55,15 @@ export default StyleSheet.create({
     marginBottom: 80
   },
 
+  bottomView2: {
+    marginTop: "auto",
+    backgroundColor: '#AAA',
+    width: "100%",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    height: "10%"
+  },
+
   mainView: {
     flex: 1,
     justifyContent: 'center',
@@ -79,6 +88,17 @@ export default StyleSheet.create({
     alignSelf: 'center'
   },
 
+  button2: {
+    width: "80%",
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 2,
+    borderRadius: 10,
+    backgroundColor: "#000",
+    justifyContent: 'center',
+    alignSelf: 'center'
+  },
+
   buttonText: {
     fontSize: 20,
     alignSelf: 'center',
@@ -89,7 +109,7 @@ export default StyleSheet.create({
     fontSize: 20,
     backgroundColor: 'transparent',
     marginTop: 20,
-    width: 300,
+    width: "80%",
     textAlign: 'left',
     color: "#000"
 
