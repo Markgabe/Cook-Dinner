@@ -38,8 +38,6 @@ export default class Login extends React.Component {
 
       (response.status === 200) ? this.props.navigation.navigate("Home") : alert("Usuário inválido!");
 
-      console.log(AsyncStorage.getItem("Loged"));
-
     }
 
   render() {
