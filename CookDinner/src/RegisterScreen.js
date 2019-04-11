@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Text, View, TextInput, Image, StyleSheet, KeyboardAvoidingView,
-TouchableOpacity, TouchableHighlight } from 'react-native';
+TouchableOpacity, TouchableHighlight, AsyncStorage } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import styles from './styles';
 
