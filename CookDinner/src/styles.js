@@ -26,13 +26,14 @@ export default StyleSheet.create({
     fontSize: 15,
     backgroundColor: '#FFF',
     marginVertical: 10,
-    width: 350,
+    width: "85%",
     height: 36,
     marginLeft: 12,
     textAlign: 'center',
     borderColor: 'gray',
     borderWidth: 2,
     borderRadius: 15,
+
   },
 
   image: {
