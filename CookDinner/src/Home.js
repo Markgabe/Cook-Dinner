@@ -4,7 +4,7 @@ import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import styles from './styles';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-fa-icons';
 
 export default class Register extends React.Component {
 
@@ -15,7 +15,19 @@ export default class Register extends React.Component {
       this.state = { search: '' };
     }
 
-    newRecipe() {
+    newRecipeScreen() {
+
+    };
+
+    homeScreen(){
+
+    };
+
+    notificationScreen(){
+
+    };
+
+    menuScreen(){
 
     };
 
@@ -32,14 +44,29 @@ export default class Register extends React.Component {
                     value={this.state.search}
                 />
 
-                <TouchableOpacity onPress={() => this.newRecipe()} style={{alignSelf:'center', marginLeft: 'auto', marginRight: 15 }}>
-                    <Icon name='plus-circle' size={36} color='#FFF' />
+                <TouchableOpacity onPress={() => this.newRecipeScreen()} style={{alignSelf:'center', marginLeft: 'auto', marginRight: 10 }}>
+                    <Icon name='plus-circle' style={{fontSize: 36, color:'#FFF'}} />
                 </TouchableOpacity>
 
             </View>
 
-            <View style={{fontSize: 30, fontWeight: 'bold', backgroundColor: 'Gray'}}>
-                <Text>ai caralho</Text>
+            <View style={{backgroundColor: 'white', alignItems: 'center', marginTop: 30}}>
+                <Text style={{fontSize: 30, fontWeight: 'bold'}}>Aqui vai ficar o feed!</Text>
+            </View>
+
+            <View style={{backgroundColor:'gray', marginTop: 'auto', flexDirection: 'row', alignItems: 'stretch', justifyContent: 'space-evenly'}}>
+
+                <TouchableOpacity onPress={() => this.homeScreen()} style={{alignSelf:'center', marginLeft: 10, marginRight: 10 }}>
+                    <Icon name='home' style={{fontSize: 36, color:'#000'}} />
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => this.notificationScreen()} style={{alignSelf:'center', marginLeft: 10, marginRight: 10 }}>
+                    <Icon name='bell' style={{fontSize: 36, color:'#FFF'}} />
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => this.menuScreen()} style={{alignSelf:'center', marginLeft: 10, marginRight: 10 }}>
+                    <Icon name='bars' style={{fontSize: 36, color:'#FFF'}} />
+                </TouchableOpacity>
             </View>
         </View>
     );
