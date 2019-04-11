@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Text, View, TouchableHighlight, TextInput,
+  Text, View, TouchableHighlight, TextInput, TouchableOpacity,
   Image, StyleSheet , KeyboardAvoidingView, AsyncStorage
 } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
@@ -37,8 +37,6 @@ export default class Login extends React.Component {
       await AsyncStorage.setItem('Uid', response.headers.map['uid']);
 
       (response.status === 200) ? this.props.navigation.navigate("Home") : alert("Usuário inválido!");
-
-      console.log(AsyncStorage.getItem("Loged"));
 
     }
 
@@ -83,7 +81,9 @@ export default class Login extends React.Component {
 
               <View style={{flexDirection: 'row', marginTop: 20}}>
               <Text style={{alignSelf: 'center', fontSize: 20}}>Não possui uma conta? </Text>
-              <Text style={{alignSelf: 'center', fontSize: 20}}>Clique!</Text>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate("Cadastro")}>
+                <Text style={{alignSelf: 'center', fontSize: 20, fontWeight: 'bold'}}>Clique!</Text>
+              </TouchableOpacity>
               </View>
 
             </View>

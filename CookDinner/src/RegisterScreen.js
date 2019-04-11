@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { Text, View, TouchableHighlight, TextInput, Image, StyleSheet } from 'react-native';
+import { Text, View, TextInput, Image, StyleSheet, KeyboardAvoidingView,
+TouchableOpacity, TouchableHighlight } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import styles from './styles';
 
@@ -10,50 +11,91 @@ export default class Register extends React.Component {
 
   constructor(props) {
       super(props);
-      this.state = { username: '', password: '' };
+      this.state = { email: '', password: '', name: '', birth: '' };
     }
+
+    async cadastrar(user, pass, name) {
+
+        const response = await fetch('https://receitas-dos-leks.herokuapp.com/auth/', {
+          method: "POST",
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              email: user,
+              password: pass,
+              name: name
+          })
+        });
+
+        await AsyncStorage.setItem('Access-Token', response.headers.map['access-token']);
+        await AsyncStorage.setItem('Client', response.headers.map['client']);
+        await AsyncStorage.setItem('Token-Type', response.headers.map['token-type']);
+        await AsyncStorage.setItem('Uid', response.headers.map['uid']);
+
+        (response.status === 200) ? this.props.navigation.navigate("Home") : alert("Não foi possível concluir o registro!");
+
+      }
 
   render() {
     return (
-      <View style={styles.mainView}>
+      <KeyboardAvoidingView behavior="height" style={{flex: 1, alignItems: 'center', backgroundColor: '#888'}}>
 
-        <View style={styles.topView}>
-          <Image source={require('./img/comida.png')} style={styles.image}/>
-          <Text style={styles.titleText}>Cook Dinner</Text>
-        </View>
+        <View style={{backgroundColor: '#888', width: "100%", alignItems: 'center',
+      height: "80%", marginTop: 80}}>
+          <TextInput style={styles.textInput2}
+          placeholder="Name"
+          onChangeText={(name) => this.setState({name})}
+          value={this.state.name}
+          underlineColorAndroid= "#000"
+          />
 
-        <View style={{flex: 1, paddingTop: 60, alignItems: 'center'}}>
+          <TextInput style={styles.textInput2}
+          placeholder="E-mail"
+          onChangeText={(email) => this.setState({email})}
+          value={this.state.email}
+          underlineColorAndroid= "#000"
+          />
 
-          <View style={styles.textInputView}>
+          <TextInput style={styles.textInput2}
+          placeholder="Year you were born"
+          onChangeText={(birth) => this.setState({birth})}
+          value={this.state.birth}
+          underlineColorAndroid= "#000"
+          />
 
-            <TextInput style={styles.textInput}
-            placeholder="Username"
-            onChangeText={(username) => this.setState({username})}
-            value={this.state.username}
-            />
+          <TextInput style={styles.textInput2}
+          placeholder="Password"
+          onChangeText={(password) => this.setState({password})}
+          value={this.state.password}
+          secureTextEntry = {true}
+          underlineColorAndroid= "#000"
+          />
 
-            <TextInput style={styles.textInput}
-            placeholder="Password"
-            onChangeText={(password) => this.setState({password})}
-            value={this.state.password}
-            />
+          <View style={styles.buttonView}>
 
-          </View>
-
-          <View style= {styles.buttonView}>
-
-            <TouchableHighlight
-              style={styles.button}
-              onPress={() => alert()}
-              underlayColor='#fff'>
-              <Text style={styles.buttonText}>Log in</Text>
+            <TouchableHighlight style={styles.button2}
+              onPress={() => this.cadastrar(this.state.email, this.state.password, this.state.name)}
+              underlayColor='#222'>
+              <Text style={styles.buttonText}>Send</Text>
             </TouchableHighlight>
 
           </View>
 
+
         </View>
 
-      </View>
+        <View style={styles.bottomView2}>
+          <Text style={{marginTop: 20, fontSize: 20}}>Já possui uma conta? </Text>
+          <TouchableOpacity style={{marginTop: 20}}
+          onPress={() => this.props.navigation.navigate("Login")}>
+            <Text style={{alignSelf: 'center', fontSize: 20, fontWeight: 'bold'}}>Clique!</Text>
+          </TouchableOpacity>
+        </View>
+
+
+      </KeyboardAvoidingView>
     );
   }
 }
