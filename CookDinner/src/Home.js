@@ -15,12 +15,6 @@ export default class Register extends React.Component {
       this.state = { search: '' };
     }
 
-    newRecipeScreen() {
-
-    };
-
-    homeScreen(){
-
     };
 
     render() {
@@ -48,15 +42,15 @@ export default class Register extends React.Component {
 
             <View style={{backgroundColor:'gray', marginTop: 'auto', flexDirection: 'row', alignItems: 'stretch', justifyContent: 'space-evenly'}}>
 
-                <TouchableOpacity onPress={() => this.homeScreen()} style={{alignSelf:'center', marginLeft: 10, marginRight: 10 }}>
+                <TouchableOpacity onPress={() => alert("Vai redirecionar para home")} style={{alignSelf:'center', marginLeft: 10, marginRight: 10 }}>
                     <Icon name='home' style={{fontSize: 36, color:'#000'}} />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => this.notificationScreen()} style={{alignSelf:'center', marginLeft: 10, marginRight: 10 }}>
+                <TouchableOpacity onPress={() => alert("Vai redirecionar para suas notificações")} style={{alignSelf:'center', marginLeft: 10, marginRight: 10 }}>
                     <Icon name='bell' style={{fontSize: 36, color:'#FFF'}} />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => this.menuScreen()} style={{alignSelf:'center', marginLeft: 10, marginRight: 10 }}>
+                <TouchableOpacity onPress={() => alert("Vai redirecionar para configs")} style={{alignSelf:'center', marginLeft: 10, marginRight: 10 }}>
                     <Icon name='bars' style={{fontSize: 36, color:'#FFF'}} />
                 </TouchableOpacity>
             </View>
