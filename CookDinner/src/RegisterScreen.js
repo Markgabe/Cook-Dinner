@@ -5,6 +5,7 @@ TouchableOpacity, TouchableHighlight, AsyncStorage } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import ImagePicker from "react-native-image-picker";
 import styles from './styles';
+import Icon from 'react-native-fa-icons';
 
 export default class Register extends React.Component {
 
@@ -74,7 +75,7 @@ export default class Register extends React.Component {
         <View style = {{marginTop : '5%'}}>
           <Image source={this.state.avatarSource} style={{width: 150, height: 150, borderRadius : 150/2}}/>
           <TouchableOpacity onPress = {this.chooseFile} style= {{alignSelf: 'flex-end'}}>
-            <Image source = {require('./img/add_image.png')} style={{width: 50, height: 50, borderRadius : 50/2}}></Image>
+            <Icon name='plus-circle' style={{fontSize: 50, borderRadius : 25, color:'black'}}></Image>
           </TouchableOpacity>
         </View>
         
