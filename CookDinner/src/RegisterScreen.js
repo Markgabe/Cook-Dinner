@@ -1,8 +1,9 @@
 
 import React from 'react';
-import { Text, View, TextInput, Image, StyleSheet, KeyboardAvoidingView,
+import { Text, View, TextInput, Button, Image, StyleSheet, KeyboardAvoidingView,
 TouchableOpacity, TouchableHighlight, AsyncStorage } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import ImagePicker from "react-native-image-picker";
 import styles from './styles';
 
 export default class Register extends React.Component {
@@ -11,8 +12,36 @@ export default class Register extends React.Component {
 
   constructor(props) {
       super(props);
-      this.state = { email: '', password: '', name: '', birth: '' };
+      this.state = { email: '', password: '', name: '', birth: '', avatarSource: require('./img/person.png') };
     }
+
+    chooseFile = () => {
+      var options = {
+        title: 'Select Image',
+        customButtons: [
+          { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+        ],
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+        },
+      };
+      ImagePicker.showImagePicker(options, (response) => {
+        console.log('Response = ', response);
+      
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else {
+          const source = { uri: response.uri };
+      
+          this.setState({
+            avatarSource: source,
+          });
+        }
+      });
+    };
 
     async cadastrar(user, pass, name) {
 
@@ -42,8 +71,15 @@ export default class Register extends React.Component {
     return (
       <KeyboardAvoidingView behavior="height" style={{flex: 1, alignItems: 'center', backgroundColor: '#888'}}>
 
+        <View style = {{marginTop : '5%'}}>
+          <Image source={this.state.avatarSource} style={{width: 150, height: 150, borderRadius : 150/2}}/>
+          <TouchableOpacity onPress = {this.chooseFile} style= {{alignSelf: 'flex-end'}}>
+            <Image source = {require('./img/add_image.png')} style={{width: 50, height: 50, borderRadius : 50/2}}></Image>
+          </TouchableOpacity>
+        </View>
+        
         <View style={{backgroundColor: '#888', width: "100%", alignItems: 'center',
-      height: "80%", marginTop: 80}}>
+      height: "80%"}}>
           <TextInput style={styles.textInput2}
           placeholder="Name"
           onChangeText={(name) => this.setState({name})}
@@ -82,7 +118,6 @@ export default class Register extends React.Component {
             </TouchableHighlight>
 
           </View>
-
 
         </View>
 
