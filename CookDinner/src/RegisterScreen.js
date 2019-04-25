@@ -19,8 +19,11 @@ export default class Register extends React.Component {
 
   chooseFile = () => {
       var options = {
-        title: 'Select Image',
-        customButtons: [{ name: 'TC', title: 'Take Photo and Crop' }, { name: 'SC', title: 'Choose from Library and Crop' }],
+        title: 'Escolha uma imagem',
+        cancelButtonTitle: 'Cancelar',
+        takePhotoButtonTitle: 'Tirar Foto...',
+        chooseFromLibraryButtonTitle: 'Escolher da Galeria...',
+        customButtons: [{ name: 'TC', title: 'Tirar Foto e Cortar...' }, { name: 'SC', title: 'Escolher da Galeria e Cortar...' }],
         storageOptions: {
           skipBackup: true,
           path: 'images',
@@ -104,17 +107,18 @@ export default class Register extends React.Component {
     return (
       <KeyboardAvoidingView behavior="height" style={{flex: 1, alignItems: 'center', backgroundColor: '#888'}}>
 
-        <View style = {{marginTop : '5%'}}>
-          <Image source={this.state.avatarSource} style={{width: 150, height: 150, borderRadius : 150/2}}/>
+        <View style = {{marginTop : 30}}>
+          <TouchableOpacity onPress = {this.chooseFile}>
+            <Image source={this.state.avatarSource} style={{width: 150, height: 150, borderRadius : 150/2}}/>
+          </TouchableOpacity>
           <TouchableOpacity onPress = {this.chooseFile} style= {{alignSelf: 'flex-end'}}>
             <Icon name='plus-circle' style={{fontSize: 50, borderRadius : 25, color:'black'}}/>
           </TouchableOpacity>
         </View>
 
-        <View style={{backgroundColor: '#888', width: "100%", alignItems: 'center',
-      height: "80%"}}>
+        <View style={{backgroundColor: '#888', width: "100%", alignItems: 'center'}}>
           <TextInput style={styles.textInput2}
-          placeholder="Name"
+          placeholder="Nome"
           onChangeText={(name) => this.setState({name})}
           value={this.state.name}
           underlineColorAndroid= "#000"
@@ -128,14 +132,14 @@ export default class Register extends React.Component {
           />
 
           <TextInput style={styles.textInput2}
-          placeholder="Year you were born"
+          placeholder="Ano de Nascimento"
           onChangeText={(birth) => this.setState({birth})}
           value={this.state.birth}
           underlineColorAndroid= "#000"
           />
 
           <TextInput style={styles.textInput2}
-          placeholder="Password"
+          placeholder="Senha"
           onChangeText={(password) => this.setState({password})}
           value={this.state.password}
           secureTextEntry = {true}
@@ -147,7 +151,7 @@ export default class Register extends React.Component {
             <TouchableHighlight style={styles.button2}
               onPress={() => this.cadastrar(this.state.email, this.state.password, this.state.name)}
               underlayColor='#222'>
-              <Text style={styles.buttonText}>Send</Text>
+              <Text style={styles.buttonText}>Enviar</Text>
             </TouchableHighlight>
 
           </View>
