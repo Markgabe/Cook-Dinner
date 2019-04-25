@@ -19,9 +19,6 @@ export default class Register extends React.Component {
     chooseFile = () => {
       var options = {
         title: 'Select Image',
-        customButtons: [
-          { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-        ],
         storageOptions: {
           skipBackup: true,
           path: 'images',
@@ -29,14 +26,39 @@ export default class Register extends React.Component {
       };
       ImagePicker.showImagePicker(options, (response) => {
         console.log('Response = ', response);
-      
+
         if (response.didCancel) {
           console.log('User cancelled image picker');
         } else if (response.error) {
           console.log('ImagePicker Error: ', response.error);
         } else {
           const source = { uri: response.uri };
-      
+
+          this.setState({
+            avatarSource: source,
+          });
+        }
+      });
+    };
+
+    chooseCustomFile = () => {
+      var options = {
+        title: 'Select Image',
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+        },
+      };
+      ImagePicker.showImagePicker(options, (response) => {
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else {
+          const source = { uri: response.uri };
+
           this.setState({
             avatarSource: source,
           });
@@ -75,10 +97,10 @@ export default class Register extends React.Component {
         <View style = {{marginTop : '5%'}}>
           <Image source={this.state.avatarSource} style={{width: 150, height: 150, borderRadius : 150/2}}/>
           <TouchableOpacity onPress = {this.chooseFile} style= {{alignSelf: 'flex-end'}}>
-            <Icon name='plus-circle' style={{fontSize: 50, borderRadius : 25, color:'black'}}></Image>
+            <Icon name='plus-circle' style={{fontSize: 50, borderRadius : 25, color:'black'}}/>
           </TouchableOpacity>
         </View>
-        
+
         <View style={{backgroundColor: '#888', width: "100%", alignItems: 'center',
       height: "80%"}}>
           <TextInput style={styles.textInput2}
