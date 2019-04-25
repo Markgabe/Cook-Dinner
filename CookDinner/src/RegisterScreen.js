@@ -1,9 +1,12 @@
 
 import React from 'react';
-import { Text, View, TextInput, Image, StyleSheet, KeyboardAvoidingView,
+import { Text, View, TextInput, Button, Image, StyleSheet, KeyboardAvoidingView,
 TouchableOpacity, TouchableHighlight, AsyncStorage } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import ImagePicker from 'react-native-image-picker';
+import ImageCropPicker from 'react-native-image-crop-picker';
 import styles from './styles';
+import Icon from 'react-native-fa-icons';
 
 export default class Register extends React.Component {
 
@@ -11,10 +14,69 @@ export default class Register extends React.Component {
 
   constructor(props) {
       super(props);
-      this.state = { email: '', password: '', name: '', birth: '' };
+      this.state = { email: '', password: '', name: '', birth: '', avatarSource: require('./img/person.png') };
     }
 
-    async cadastrar(user, pass, name) {
+  chooseFile = () => {
+      var options = {
+        title: 'Select Image',
+        customButtons: [{ name: 'TC', title: 'Take Photo and Crop' }, { name: 'SC', title: 'Choose from Library and Crop' }],
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+        },
+      };
+      ImagePicker.showImagePicker(options, (response) => {
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton == "TC") {
+          ImageCropPicker.openCamera({
+            width: 150,
+            height: 150,
+            cropping: true,
+          }).then(image => {
+            this.setState({
+              avatarSource: { uri: image.path },
+            })
+          });
+        } else if (response.customButton == "SC") {
+          ImageCropPicker.openPicker({
+            width: 150,
+            height: 150,
+            cropping: true
+          }).then(image => {
+            this.setState({
+              avatarSource: { uri: image.path },
+            })
+          });
+        } else {
+          const source = { uri: response.uri };
+
+          this.setState({
+            avatarSource: source,
+          });
+        }
+      });
+    }
+
+  chooseCustomFile = () => {
+      ImageCropPicker.openPicker({
+        width: 150,
+        height: 150,
+        cropping: true
+      }).then(image => {
+        this.setState({
+          avatarSource: { uri: image.path },
+        })
+      });
+
+    }
+
+  async cadastrar(user, pass, name) {
 
         const response = await fetch('https://receitas-dos-leks.herokuapp.com/auth/', {
           method: "POST",
@@ -42,8 +104,15 @@ export default class Register extends React.Component {
     return (
       <KeyboardAvoidingView behavior="height" style={{flex: 1, alignItems: 'center', backgroundColor: '#888'}}>
 
+        <View style = {{marginTop : '5%'}}>
+          <Image source={this.state.avatarSource} style={{width: 150, height: 150, borderRadius : 150/2}}/>
+          <TouchableOpacity onPress = {this.chooseFile} style= {{alignSelf: 'flex-end'}}>
+            <Icon name='plus-circle' style={{fontSize: 50, borderRadius : 25, color:'black'}}/>
+          </TouchableOpacity>
+        </View>
+
         <View style={{backgroundColor: '#888', width: "100%", alignItems: 'center',
-      height: "80%", marginTop: 80}}>
+      height: "80%"}}>
           <TextInput style={styles.textInput2}
           placeholder="Name"
           onChangeText={(name) => this.setState({name})}
@@ -83,7 +152,6 @@ export default class Register extends React.Component {
 
           </View>
 
-
         </View>
 
         <View style={styles.bottomView2}>
@@ -98,4 +166,5 @@ export default class Register extends React.Component {
       </KeyboardAvoidingView>
     );
   }
+
 }
