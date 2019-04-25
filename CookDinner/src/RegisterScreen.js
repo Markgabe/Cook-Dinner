@@ -66,19 +66,6 @@ export default class Register extends React.Component {
       });
     }
 
-  chooseCustomFile = () => {
-      ImageCropPicker.openPicker({
-        width: 150,
-        height: 150,
-        cropping: true
-      }).then(image => {
-        this.setState({
-          avatarSource: { uri: image.path },
-        })
-      });
-
-    }
-
   async cadastrar(user, pass, name) {
 
         const response = await fetch('https://receitas-dos-leks.herokuapp.com/auth/', {
