@@ -4,8 +4,7 @@ import {
   Image, StyleSheet , KeyboardAvoidingView, AsyncStorage
 } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
-import styles from './styles';
-import Home from './Home';
+import Home from '../Home';
 
 export default class Login extends React.Component {
 
@@ -46,37 +45,35 @@ export default class Login extends React.Component {
         <View>
 
           <View style={{alignItems: 'center', flex: 1, backgroundColor: '#AAA'}}>
-            <Image source={require('./img/comida.png')} style={styles.image}/>
-            <Text style={styles.titleText}>Cook Dinner</Text>
+            <Image source={require('../../Assets/comida.png')} style={{flex: 0.5, resizeMode: 'contain', marginTop: 40}}/>
+            <Text style={{flex:0.5, fontSize: 40, fontWeight: 'bold', marginTop: 20}}>Cook Dinner</Text>
           </View>
 
-          <View style={{alignItems: 'center', flex: 1,
-          paddingTop: 50
-        }}>
+          <View style={{alignItems: 'center', flex: 1, paddingTop: 50}}>
 
             <View>
 
-              <TextInput style={styles.textInput}
+              <TextInput style={{backgroundColor: '#FFF', marginTop: 10, fontSize: 20, width: 300, textAlign: 'center', borderColor: 'gray', borderWidth: 2, borderRadius: 10}}
               placeholder="E-mail"
               onChangeText={(username) => this.setState({username})}
               value={this.state.username}
               />
 
-              <TextInput style={styles.textInput}
+              <TextInput style={{backgroundColor: '#FFF', marginTop: 10, fontSize: 20, width: 300, textAlign: 'center', borderColor: 'gray', borderWidth: 2, borderRadius: 10}}
               placeholder="Senha"
               onChangeText={(password) => this.setState({password})}
               value={this.state.password}
               secureTextEntry = {true}
               />
 
-              <View style={styles.buttonView}>
+              <View style={{marginTop: 30, alignSelf: 'stretch', //flex:1
+          }}>
 
-                <TouchableHighlight style={styles.button}
+                <TouchableHighlight style={{width: "100%", height: 40, borderColor: 'gray', borderWidth: 2, borderRadius: 10, backgroundColor: "#000", justifyContent: 'center', alignSelf: 'center'}}
                   onPress={() => this.validar(this.state.username, this.state.password)}
                   underlayColor='#222'>
-                  <Text style={styles.buttonText}>Logar</Text>
+                  <Text style={{fontSize: 20, alignSelf: 'center', color: "#FFF"}}>Logar</Text>
                 </TouchableHighlight>
-
               </View>
 
               <View style={{flexDirection: 'row', marginTop: 20}}>

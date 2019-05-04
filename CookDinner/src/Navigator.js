@@ -1,6 +1,6 @@
-import Login from './LoginScreen';
-import Register from './RegisterScreen';
-import RecipeRegister from './NewRecipe';
+import Login from './Pages/Login';
+import Register from './Pages/Register';
+import RecipeRegister from './Pages/NewRecipe';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 const TabNavigator = createBottomTabNavigator({

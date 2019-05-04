@@ -1,11 +1,9 @@
-
 import React from 'react';
 import { Text, View, TextInput, Button, Image, StyleSheet, KeyboardAvoidingView,
 TouchableOpacity, TouchableHighlight, AsyncStorage } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import ImagePicker from 'react-native-image-picker';
 import ImageCropPicker from 'react-native-image-crop-picker';
-import styles from './styles';
 import Icon from 'react-native-fa-icons';
 
 export default class Register extends React.Component {
@@ -14,7 +12,7 @@ export default class Register extends React.Component {
 
   constructor(props) {
       super(props);
-      this.state = { email: '', password: '', name: '', birth: '', avatarSource: require('./img/person.png') };
+      this.state = { email: '', password: '', name: '', birth: '', avatarSource: require('../../Assets/person.png') };
     }
 
   chooseFile = () => {
@@ -104,28 +102,28 @@ export default class Register extends React.Component {
         </View>
 
         <View style={{backgroundColor: '#888', width: "100%", alignItems: 'center'}}>
-          <TextInput style={styles.textInput2}
+          <TextInput style={{fontSize: 20, backgroundColor: 'transparent', marginTop: 20, width: "80%", textAlign: 'left', color: "#000"}}
           placeholder="Nome"
           onChangeText={(name) => this.setState({name})}
           value={this.state.name}
           underlineColorAndroid= "#000"
           />
 
-          <TextInput style={styles.textInput2}
+          <TextInput style={{fontSize: 20, backgroundColor: 'transparent', marginTop: 20, width: "80%", textAlign: 'left', color: "#000"}}
           placeholder="E-mail"
           onChangeText={(email) => this.setState({email})}
           value={this.state.email}
           underlineColorAndroid= "#000"
           />
 
-          <TextInput style={styles.textInput2}
+          <TextInput style={{fontSize: 20, backgroundColor: 'transparent', marginTop: 20, width: "80%", textAlign: 'left', color: "#000"}}
           placeholder="Ano de Nascimento"
           onChangeText={(birth) => this.setState({birth})}
           value={this.state.birth}
           underlineColorAndroid= "#000"
           />
 
-          <TextInput style={styles.textInput2}
+          <TextInput style={{fontSize: 20, backgroundColor: 'transparent', marginTop: 20, width: "80%", textAlign: 'left', color: "#000"}}
           placeholder="Senha"
           onChangeText={(password) => this.setState({password})}
           value={this.state.password}
@@ -133,19 +131,19 @@ export default class Register extends React.Component {
           underlineColorAndroid= "#000"
           />
 
-          <View style={styles.buttonView}>
+          <View style={{marginTop: 30, alignSelf: 'stretch'}}>
 
-            <TouchableHighlight style={styles.button2}
+            <TouchableHighlight style={{width: "80%",height: 40,borderColor: 'gray',borderWidth: 2,borderRadius: 10,backgroundColor: "#000",justifyContent: 'center', alignSelf: 'center'}}
               onPress={() => this.cadastrar(this.state.email, this.state.password, this.state.name)}
               underlayColor='#222'>
-              <Text style={styles.buttonText}>Enviar</Text>
+              <Text style={{fontSize: 20, alignSelf: 'center', color: "#FFF"}}>Enviar</Text>
             </TouchableHighlight>
 
           </View>
 
         </View>
 
-        <View style={styles.bottomView2}>
+        <View style={{marginTop: "auto", backgroundColor: '#AAA', width: "100%", flexDirection: 'row', justifyContent: 'center', height: "10%"}}>
           <Text style={{marginTop: 20, fontSize: 20}}>Já possui uma conta? </Text>
           <TouchableOpacity style={{marginTop: 20}}
           onPress={() => this.props.navigation.navigate("Login")}>
