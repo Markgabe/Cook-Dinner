@@ -1,9 +1,12 @@
 
 import React from 'react';
-import { Text, View, TextInput, Image, StyleSheet, KeyboardAvoidingView,
-TouchableOpacity, TouchableHighlight } from 'react-native';
+import { Text, View, TextInput, Button, Image, StyleSheet, KeyboardAvoidingView,
+TouchableOpacity, TouchableHighlight, AsyncStorage } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import ImagePicker from 'react-native-image-picker';
+import ImageCropPicker from 'react-native-image-crop-picker';
 import styles from './styles';
+import Icon from 'react-native-fa-icons';
 
 export default class Register extends React.Component {
 
@@ -11,10 +14,59 @@ export default class Register extends React.Component {
 
   constructor(props) {
       super(props);
-      this.state = { email: '', password: '', name: '', birth: '' };
+      this.state = { email: '', password: '', name: '', birth: '', avatarSource: require('./img/person.png') };
     }
 
-    async cadastrar(user, pass, name) {
+  chooseFile = () => {
+      var options = {
+        title: 'Escolha uma imagem',
+        cancelButtonTitle: 'Cancelar',
+        takePhotoButtonTitle: 'Tirar Foto...',
+        chooseFromLibraryButtonTitle: 'Escolher da Galeria...',
+        customButtons: [{ name: 'TC', title: 'Tirar Foto e Cortar...' }, { name: 'SC', title: 'Escolher da Galeria e Cortar...' }],
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+        },
+      };
+      ImagePicker.showImagePicker(options, (response) => {
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton == "TC") {
+          ImageCropPicker.openCamera({
+            width: 150,
+            height: 150,
+            cropping: true,
+          }).then(image => {
+            this.setState({
+              avatarSource: { uri: image.path },
+            })
+          });
+        } else if (response.customButton == "SC") {
+          ImageCropPicker.openPicker({
+            width: 150,
+            height: 150,
+            cropping: true
+          }).then(image => {
+            this.setState({
+              avatarSource: { uri: image.path },
+            })
+          });
+        } else {
+          const source = { uri: response.uri };
+
+          this.setState({
+            avatarSource: source,
+          });
+        }
+      });
+    }
+
+  async cadastrar(user, pass, name) {
 
         const response = await fetch('https://receitas-dos-leks.herokuapp.com/auth/', {
           method: "POST",
@@ -42,10 +94,18 @@ export default class Register extends React.Component {
     return (
       <KeyboardAvoidingView behavior="height" style={{flex: 1, alignItems: 'center', backgroundColor: '#888'}}>
 
-        <View style={{backgroundColor: '#888', width: "100%", alignItems: 'center',
-      height: "80%", marginTop: 80}}>
+        <View style = {{marginTop : 30}}>
+          <TouchableOpacity onPress = {this.chooseFile}>
+            <Image source={this.state.avatarSource} style={{width: 150, height: 150, borderRadius : 150/2}}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress = {this.chooseFile} style= {{alignSelf: 'flex-end'}}>
+            <Icon name='plus-circle' style={{fontSize: 50, borderRadius : 25, color:'black'}}/>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{backgroundColor: '#888', width: "100%", alignItems: 'center'}}>
           <TextInput style={styles.textInput2}
-          placeholder="Name"
+          placeholder="Nome"
           onChangeText={(name) => this.setState({name})}
           value={this.state.name}
           underlineColorAndroid= "#000"
@@ -59,14 +119,14 @@ export default class Register extends React.Component {
           />
 
           <TextInput style={styles.textInput2}
-          placeholder="Year you were born"
+          placeholder="Ano de Nascimento"
           onChangeText={(birth) => this.setState({birth})}
           value={this.state.birth}
           underlineColorAndroid= "#000"
           />
 
           <TextInput style={styles.textInput2}
-          placeholder="Password"
+          placeholder="Senha"
           onChangeText={(password) => this.setState({password})}
           value={this.state.password}
           secureTextEntry = {true}
@@ -78,11 +138,10 @@ export default class Register extends React.Component {
             <TouchableHighlight style={styles.button2}
               onPress={() => this.cadastrar(this.state.email, this.state.password, this.state.name)}
               underlayColor='#222'>
-              <Text style={styles.buttonText}>Send</Text>
+              <Text style={styles.buttonText}>Enviar</Text>
             </TouchableHighlight>
 
           </View>
-
 
         </View>
 
@@ -98,4 +157,5 @@ export default class Register extends React.Component {
       </KeyboardAvoidingView>
     );
   }
+
 }

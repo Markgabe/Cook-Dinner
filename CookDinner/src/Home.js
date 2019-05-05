@@ -15,8 +15,6 @@ export default class Register extends React.Component {
       this.state = { search: '' };
     }
 
-    };
-
     render() {
         return (
 
@@ -30,7 +28,7 @@ export default class Register extends React.Component {
                     value={this.state.search}
                 />
 
-                <TouchableOpacity onPress={() => this.newRecipeScreen()} style={{alignSelf:'center', marginLeft: 'auto', marginRight: 10 }}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("NewRecipe")} style={{marginLeft: "auto", marginRight: 10}}>
                     <Icon name='plus-circle' style={{fontSize: 36, color:'#FFF'}} />
                 </TouchableOpacity>
 

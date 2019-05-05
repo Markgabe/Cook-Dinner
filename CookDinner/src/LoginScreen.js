@@ -57,13 +57,13 @@ export default class Login extends React.Component {
             <View>
 
               <TextInput style={styles.textInput}
-              placeholder="Username"
+              placeholder="E-mail"
               onChangeText={(username) => this.setState({username})}
               value={this.state.username}
               />
 
               <TextInput style={styles.textInput}
-              placeholder="Password"
+              placeholder="Senha"
               onChangeText={(password) => this.setState({password})}
               value={this.state.password}
               secureTextEntry = {true}
@@ -74,7 +74,7 @@ export default class Login extends React.Component {
                 <TouchableHighlight style={styles.button}
                   onPress={() => this.validar(this.state.username, this.state.password)}
                   underlayColor='#222'>
-                  <Text style={styles.buttonText}>Login</Text>
+                  <Text style={styles.buttonText}>Logar</Text>
                 </TouchableHighlight>
 
               </View>
