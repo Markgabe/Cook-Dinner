@@ -6,6 +6,7 @@ import Home from './Pages/Home';
 import NewRecipe from './Pages/NewRecipe';
 import Notifications from './Pages/Notifications';
 import Menu from './Pages/Menu';
+import QRScreen from './Pages/QRScreen';
 
 import { createStackNavigator, createAppContainer } from 'react-navigation'; // Version can be specified in package.json
 
@@ -17,7 +18,8 @@ const RootStack = createStackNavigator(
     Home: Home,
     NewRecipe: NewRecipe,
     Notifications: Notifications,
-    Menu: Menu
+    Menu: Menu,
+    QRScreen: QRScreen
   },
   {
     initialRouteName: 'Home',
