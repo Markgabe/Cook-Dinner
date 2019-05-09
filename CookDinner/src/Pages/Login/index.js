@@ -10,15 +10,15 @@ import {Container, Content , TextBox,
 
 export default class Login extends React.Component {
 
-  static navigationOptions = { header: null };
+    static navigationOptions = { header: null };
 
 
-  constructor(props) {
+    constructor(props) {
       super(props);
       this.state = { username: '', password: ''};
     }
 
-  async validar(user, pass) {
+    async validar(user, pass) {
 
       const response = await fetch('https://receitas-dos-leks.herokuapp.com/auth/sign_in', {
         method: "POST",
@@ -41,7 +41,7 @@ export default class Login extends React.Component {
 
     }
 
-  render() {
+    render() {
     return (
         <Container behavior='padding'>
             <Logo />
@@ -77,6 +77,6 @@ export default class Login extends React.Component {
             </Content>
       </Container>
     );
-  }
+    }
 
 }

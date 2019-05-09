@@ -9,7 +9,7 @@ export default function Tabs({screen, nav}){
     var homeColor = '#FFF';
     var notifColor = '#FFF';
     var menuColor = '#FFF';
-    var QrColor = '#GGG';
+    var qrColor = '#FFF';
 
     if(screen=='Home') homeColor = '#000';
     else if(screen=='Notifications') notifColor = '#000';
@@ -24,7 +24,7 @@ export default function Tabs({screen, nav}){
                 <Icon name='bell' style={{fontSize: 38, color: notifColor}} />
             </TabButton>
             <TabButton onPress={() => nav('QRScreen')}>
-                <Icon name='camera' style={{fontSize:45, color: QrColor}} />
+                <Icon name='qrcode' style={{fontSize:45, color: qrColor}} />
             </TabButton>
             <TabButton onPress={() => nav('Menu')}>
                 <Icon name='bars' style={{fontSize: 45, color: menuColor}} />
