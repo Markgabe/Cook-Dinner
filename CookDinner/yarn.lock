@@ -1890,15 +1890,9 @@ css-color-keywords@^1.0.0:
   integrity sha1-/qJhbcZ2spYmhrOvjb2+GAskTgU=
 
 css-to-react-native@^2.2.2:
-<<<<<<< HEAD
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/css-to-react-native/-/css-to-react-native-2.3.0.tgz#bf80d24ec4a08e430306ef429c0586e6ed5485f7"
-  integrity sha512-IhR7bNIrCFwbJbKZOAjNDZdwpsbjTN6f1agXeELHDqg1wHPA8c2QLruttKOW7hgMGetkfraRJCIEMrptifBfVw==
-=======
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/css-to-react-native/-/css-to-react-native-2.3.1.tgz#cf0f61e0514846e2d4dc188b0886e29d8bef64a2"
   integrity sha512-yO+oEx1Lf+hDKasqQRVrAvzMCz825Huh1VMlEEDlRWyAhFb/FWb6I0KpEF1PkyKQ7NEdcx9d5M2ZEWgJAsgPvQ==
->>>>>>> 3611675ffc5cc255ef0a758b55f0c87a53c94d20
   dependencies:
     camelize "^1.0.0"
     css-color-keywords "^1.0.0"
@@ -5614,15 +5608,9 @@ react-native-vector-icons@^6.4.2:
     yargs "^13.2.2"
 
 react-native@^0.59.6:
-<<<<<<< HEAD
-  version "0.59.6"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.59.6.tgz#9231832db858e8800a689c079f6721326a05bacc"
-  integrity sha512-5mqAnyt1Fo4kXkYPI41dBzXR2GoMO//bJQXEyV5/B7uTcTByZnV9je1wrvtBNsLWa6t6axTu+u+bK9ZbRQlDjg==
-=======
   version "0.59.8"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.59.8.tgz#ade4141c777c60f5ec4889d9811d0f80a9d56547"
   integrity sha512-x1T+/pEXrjgdH9uDzd5doJy5aFlBqW04j7ljDKIGALchhnvdFbtXXrUZ/1PfWHMrIdZxtaDt4tkSttp662GSQA==
->>>>>>> 3611675ffc5cc255ef0a758b55f0c87a53c94d20
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@react-native-community/cli" "^1.2.1"

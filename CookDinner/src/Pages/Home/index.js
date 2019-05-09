@@ -1,26 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
-import Icon from 'react-native-fa-icons';
-
-import Container from './Styles';
-import TopBar from '../../Components/TopBar'
-import Feed from '../../Components/Feed'
-import Tabs from '../../Components/Tabs'
-
-
-export default function Home() {
-    var navigationOptions = { header: null };
-    var search = '';
-    return (
-    <Container>
-        <TopBar />
-        <Feed />
-        <Tabs/>
-    </Container>
-    );
-=======
-import { Text, View, TextInput, TouchableOpacity, Button } from 'react-native';
 import Icon from 'react-native-fa-icons';
 
 import { Container, TopBar, SearchBar, NewRecipeButton } from './styles';
@@ -56,5 +34,4 @@ export default class Home extends React.Component {
         </Container>
     );
   }
->>>>>>> 3611675ffc5cc255ef0a758b55f0c87a53c94d20
 }
