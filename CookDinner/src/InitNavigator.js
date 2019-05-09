@@ -1,9 +1,13 @@
 import React from 'react';
-import { Button, View, Text } from 'react-native';
-import Login from './LoginScreen';
-import Register from './RegisterScreen';
-import Home from './Home';
-import NewRecipe from './NewRecipe';
+
+import Login from './Pages/Login';
+import Register from './Pages/Register';
+import Home from './Pages/Home';
+import NewRecipe from './Pages/NewRecipe';
+import Notifications from './Pages/Notifications';
+import Menu from './Pages/Menu';
+import QRScreen from './Pages/QRScreen';
+
 import { createStackNavigator, createAppContainer } from 'react-navigation'; // Version can be specified in package.json
 
 
@@ -12,10 +16,13 @@ const RootStack = createStackNavigator(
     Login: Login,
     Cadastro: Register,
     Home: Home,
-    NewRecipe: NewRecipe
+    NewRecipe: NewRecipe,
+    Notifications: Notifications,
+    Menu: Menu,
+    QRScreen: QRScreen
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Home',
   }
 );
 
