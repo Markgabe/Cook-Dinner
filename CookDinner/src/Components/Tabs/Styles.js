@@ -1,15 +1,16 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-    backgroundColor:'gray';
-    marginTop: 'auto';
-    flexDirection: 'row';
-    alignItems: 'stretch';
-    justifyContent: 'space-evenly';
+    background-color: #CCC;
+    margin-top: auto;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: auto;
+    width: 100%;
 `
 
 export const TabButton = styled.TouchableOpacity`
-    alignSelf:'center';
-    marginLeft: 10;
-    marginRight: 10;
+    align-self: center;
+    margin-vertical: 5;
+    margin-horizontal: 30;
 `

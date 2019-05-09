@@ -1,12 +1,12 @@
 import styled from 'styled-components/native';
-import Icon from 'react-native-fa-icons';
 
 export const Container = styled.View`
-    backgroundColor: 'white';
-    alignItems: 'center';
-    marginTop: 30;
+    background-color: #FFF;
+    align-items: center;
+    margin-top: 30;
 `
-export const Card = styled.Text`
-    fontSize: 30;
-    fontWeight: 'bold';
+
+export const FeedCard = styled.Text`
+    font-size: 30;
+    font-weight: bold;
 `
