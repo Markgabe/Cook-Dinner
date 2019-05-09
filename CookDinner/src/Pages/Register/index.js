@@ -6,13 +6,17 @@ import ImagePicker from 'react-native-image-picker';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-fa-icons';
 
+import {Container, Content, TextBox, AvatarImage,
+        RegisterButton, RegisterButtonText, RegisterButtonContainer,
+        HasAccountText, HasAccountButton, HasAccountContainer} from './styles';
+
 export default class Register extends React.Component {
 
   static navigationOptions = { header: null };
 
   constructor(props) {
       super(props);
-      this.state = { email: '', password: '', name: '', birth: '', avatarSource: require('../../Assets/person.png') };
+      this.state = { email: '', password: '', name: '', birth: '', avatarSource: require('../../Assets/profile.png') };
     }
 
   chooseFile = () => {
@@ -84,75 +88,70 @@ export default class Register extends React.Component {
         await AsyncStorage.setItem('Token-Type', response.headers.map['token-type']);
         await AsyncStorage.setItem('Uid', response.headers.map['uid']);
 
-        (response.status === 200) ? this.props.navigation.navigate("Home") : alert("Não foi possível concluir o registro!");
+        (response.status === 200) ? this.props.navigation.replace("Home") : alert("Não foi possível concluir o registro!");
 
       }
 
   render() {
     return (
-      <KeyboardAvoidingView behavior="height" style={{flex: 1, alignItems: 'center', backgroundColor: '#888'}}>
+      <Container behavior="height">
 
         <View style = {{marginTop : 30}}>
           <TouchableOpacity onPress = {this.chooseFile}>
-            <Image source={this.state.avatarSource} style={{width: 150, height: 150, borderRadius : 150/2}}/>
+            <AvatarImage source={this.state.avatarSource} />
           </TouchableOpacity>
           <TouchableOpacity onPress = {this.chooseFile} style= {{alignSelf: 'flex-end'}}>
-            <Icon name='plus-circle' style={{fontSize: 50, borderRadius : 25, color:'black'}}/>
+            <Icon name='plus-circle' style={{fontSize: 50, color:'black'}}/>
           </TouchableOpacity>
         </View>
 
-        <View style={{backgroundColor: '#888', width: "100%", alignItems: 'center'}}>
-          <TextInput style={{fontSize: 20, backgroundColor: 'transparent', marginTop: 20, width: "80%", textAlign: 'left', color: "#000"}}
-          placeholder="Nome"
-          onChangeText={(name) => this.setState({name})}
-          value={this.state.name}
-          underlineColorAndroid= "#000"
-          />
+        <Content>
+            <TextBox
+                placeholder="Nome"
+                onChangeText={(name) => this.setState({name})}
+                value={this.state.name}
+                underlineColorAndroid= "#000"
+            />
 
-          <TextInput style={{fontSize: 20, backgroundColor: 'transparent', marginTop: 20, width: "80%", textAlign: 'left', color: "#000"}}
-          placeholder="E-mail"
-          onChangeText={(email) => this.setState({email})}
-          value={this.state.email}
-          underlineColorAndroid= "#000"
-          />
+            <TextBox
+                placeholder="E-mail"
+                onChangeText={(email) => this.setState({email})}
+                value={this.state.email}
+                underlineColorAndroid= "#000"
+            />
 
-          <TextInput style={{fontSize: 20, backgroundColor: 'transparent', marginTop: 20, width: "80%", textAlign: 'left', color: "#000"}}
-          placeholder="Ano de Nascimento"
-          onChangeText={(birth) => this.setState({birth})}
-          value={this.state.birth}
-          underlineColorAndroid= "#000"
-          />
+            <TextBox
+                placeholder="Ano de Nascimento"
+                onChangeText={(birth) => this.setState({birth})}
+                value={this.state.birth}
+                underlineColorAndroid= "#000"
+            />
 
-          <TextInput style={{fontSize: 20, backgroundColor: 'transparent', marginTop: 20, width: "80%", textAlign: 'left', color: "#000"}}
-          placeholder="Senha"
-          onChangeText={(password) => this.setState({password})}
-          value={this.state.password}
-          secureTextEntry = {true}
-          underlineColorAndroid= "#000"
-          />
+            <TextBox
+                placeholder="Senha"
+                onChangeText={(password) => this.setState({password})}
+                value={this.state.password}
+                secureTextEntry = {true}
+                underlineColorAndroid= "#000"
+            />
 
-          <View style={{marginTop: 30, alignSelf: 'stretch'}}>
+            <RegisterButtonContainer>
+                <RegisterButton
+                    underlayColor='#222'
+                    onPress={() => this.cadastrar(this.state.email, this.state.password, this.state.name)}
+                >
+                    <RegisterButtonText>Enviar</RegisterButtonText>
+                </RegisterButton>
+            </RegisterButtonContainer>
+        </Content>
 
-            <TouchableHighlight style={{width: "80%",height: 40,borderColor: 'gray',borderWidth: 2,borderRadius: 10,backgroundColor: "#000",justifyContent: 'center', alignSelf: 'center'}}
-              onPress={() => this.cadastrar(this.state.email, this.state.password, this.state.name)}
-              underlayColor='#222'>
-              <Text style={{fontSize: 20, alignSelf: 'center', color: "#FFF"}}>Enviar</Text>
-            </TouchableHighlight>
+        <HasAccountContainer>
+            <HasAccountButton onPress={() => this.props.navigation.replace('Login')}>
+                <HasAccountText>Já possui uma conta? Clique aqui!</HasAccountText>
+            </HasAccountButton>
+        </HasAccountContainer>
 
-          </View>
-
-        </View>
-
-        <View style={{marginTop: "auto", backgroundColor: '#AAA', width: "100%", flexDirection: 'row', justifyContent: 'center', height: "10%"}}>
-          <Text style={{marginTop: 20, fontSize: 20}}>Já possui uma conta? </Text>
-          <TouchableOpacity style={{marginTop: 20}}
-          onPress={() => this.props.navigation.navigate("Login")}>
-            <Text style={{alignSelf: 'center', fontSize: 20, fontWeight: 'bold'}}>Clique!</Text>
-          </TouchableOpacity>
-        </View>
-
-
-      </KeyboardAvoidingView>
+      </Container>
     );
   }
 

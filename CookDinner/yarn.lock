@@ -1890,9 +1890,15 @@ css-color-keywords@^1.0.0:
   integrity sha1-/qJhbcZ2spYmhrOvjb2+GAskTgU=
 
 css-to-react-native@^2.2.2:
+<<<<<<< HEAD
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/css-to-react-native/-/css-to-react-native-2.3.0.tgz#bf80d24ec4a08e430306ef429c0586e6ed5485f7"
   integrity sha512-IhR7bNIrCFwbJbKZOAjNDZdwpsbjTN6f1agXeELHDqg1wHPA8c2QLruttKOW7hgMGetkfraRJCIEMrptifBfVw==
+=======
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/css-to-react-native/-/css-to-react-native-2.3.1.tgz#cf0f61e0514846e2d4dc188b0886e29d8bef64a2"
+  integrity sha512-yO+oEx1Lf+hDKasqQRVrAvzMCz825Huh1VMlEEDlRWyAhFb/FWb6I0KpEF1PkyKQ7NEdcx9d5M2ZEWgJAsgPvQ==
+>>>>>>> 3611675ffc5cc255ef0a758b55f0c87a53c94d20
   dependencies:
     camelize "^1.0.0"
     css-color-keywords "^1.0.0"
@@ -2779,6 +2785,11 @@ fs.realpath@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
   integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
+
+fs@^0.0.1-security:
+  version "0.0.1-security"
+  resolved "https://registry.yarnpkg.com/fs/-/fs-0.0.1-security.tgz#8a7bd37186b6dddf3813f23858b57ecaaf5e41d4"
+  integrity sha1-invTcYa23d84E/I4WLV+yq9eQdQ=
 
 fsevents@^1.2.3, fsevents@^1.2.7:
   version "1.2.7"
@@ -5511,6 +5522,13 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-native-camera@^2.6.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-camera/-/react-native-camera-2.7.0.tgz#6d1e53ff335e1a229008044638599a4375b3f7b7"
+  integrity sha512-QPpvnGKVDHnm9V1l58iO7WjgX/M3DRxOzeSPrUYXbPKta/xyWnjbaCr8Ip4TNVEpUmzw+24Z/id5qlz/a9EABA==
+  dependencies:
+    prop-types "^15.6.2"
+
 react-native-fa-icons@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/react-native-fa-icons/-/react-native-fa-icons-4.1.0.tgz#30a1460094cbe9c7bfec565e78a686b84a484397"
@@ -5546,6 +5564,19 @@ react-native-paper@^2.15.1:
     hoist-non-react-statics "^3.1.0"
     react-lifecycles-compat "^3.0.4"
     react-native-safe-area-view "^0.12.0"
+
+react-native-permissions@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-1.1.1.tgz#4876004681ff8556454613d85249b01baff9b35b"
+  integrity sha512-t0Ujm177bagjUOSzhpmkSz+LqFW04HnY9TeZFavDCmV521fQvFz82aD+POXqWsAdsJVOK3umJYBNNqCjC3g0hQ==
+
+react-native-qrcode-scanner@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-qrcode-scanner/-/react-native-qrcode-scanner-1.2.1.tgz#aa3949a77f6eee063a3ca25796a1f0ce17f9c4dd"
+  integrity sha512-JLX6iCmvUkBmbXcHHjtRS+OFr2onp9IFE9FXSPGZUuXib78afNEIg+qiWJdKfhQvtPKffRf55TH/WHxD3XDwKQ==
+  dependencies:
+    prop-types "^15.5.10"
+    react-native-permissions "^1.1.1"
 
 react-native-safe-area-view@^0.12.0:
   version "0.12.0"
@@ -5583,9 +5614,15 @@ react-native-vector-icons@^6.4.2:
     yargs "^13.2.2"
 
 react-native@^0.59.6:
+<<<<<<< HEAD
   version "0.59.6"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.59.6.tgz#9231832db858e8800a689c079f6721326a05bacc"
   integrity sha512-5mqAnyt1Fo4kXkYPI41dBzXR2GoMO//bJQXEyV5/B7uTcTByZnV9je1wrvtBNsLWa6t6axTu+u+bK9ZbRQlDjg==
+=======
+  version "0.59.8"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.59.8.tgz#ade4141c777c60f5ec4889d9811d0f80a9d56547"
+  integrity sha512-x1T+/pEXrjgdH9uDzd5doJy5aFlBqW04j7ljDKIGALchhnvdFbtXXrUZ/1PfWHMrIdZxtaDt4tkSttp662GSQA==
+>>>>>>> 3611675ffc5cc255ef0a758b55f0c87a53c94d20
   dependencies:
     "@babel/runtime" "^7.0.0"
     "@react-native-community/cli" "^1.2.1"
