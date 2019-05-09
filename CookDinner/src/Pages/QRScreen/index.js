@@ -14,7 +14,7 @@ export default class ScanScreen extends Component {
     onSuccess = (e) => {
         Linking
             .openURL(e.data)
-            .catch(err => console.error('An error occured', err));
+            .catch(err => alert(err));
     }
 
     render() {
