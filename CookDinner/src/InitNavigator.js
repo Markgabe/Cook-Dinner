@@ -20,7 +20,7 @@ const RootStack = createStackNavigator(
     QRScreen: QRScreen
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Login',
   }
 );
 

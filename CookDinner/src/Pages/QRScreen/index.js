@@ -14,7 +14,10 @@ export default class ScanScreen extends Component {
     onSuccess = (e) => {
         Linking
             .openURL(e.data)
-            .catch(err => alert(err));
+            .catch(err => {
+                alert('"'+e.data+'"'+" não é uma URL válida");
+                this.props.navigation.goBack();
+            });
     }
 
     render() {
