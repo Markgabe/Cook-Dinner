@@ -65,3 +65,14 @@ export const AvatarImage = styled.Image`
     height: 150;
     border-radius: 75;
 `
+
+export const AvatarContainer = styled.View`
+    margin-top: 30;
+`
+
+export const ChooseFileButton = styled.TouchableOpacity`
+`
+
+export const IconButton = styled.TouchableOpacity`
+    align-self: flex-end;
+`

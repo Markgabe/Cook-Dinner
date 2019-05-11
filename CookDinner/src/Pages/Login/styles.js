@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 export const Container = styled.KeyboardAvoidingView`
     flex: 1;
     background-color: #888;
+    align-items: center;
 `
 
 export const Content = styled.View`
@@ -53,4 +54,7 @@ export const NoAccountText = styled.Text`
     align-self: center;
     font-size: 20;
     font-weight: bold;
+`
+
+export const NoAccountButton = styled.TouchableHighlight`
 `
