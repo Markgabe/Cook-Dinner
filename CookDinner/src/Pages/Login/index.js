@@ -35,7 +35,7 @@ export default class Login extends React.Component {
       await AsyncStorage.setItem('Token-Type', response.headers.map['token-type']);
       await AsyncStorage.setItem('Uid', response.headers.map['uid']);
 
-      (response.status === 200) ? this.props.navigation.navigate("Home") : alert("Usuário inválido!");
+      (response.status === 200) ? this.props.navigation.replace("Home") : alert("Usuário inválido!");
 
     }
 

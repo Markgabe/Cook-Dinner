@@ -20,7 +20,7 @@ export const HasAccountText = styled.Text`
     font-weight: bold;
 `
 
-export const HasAccountButton = styled.TouchableHighlight`
+export const HasAccountButton = styled.TouchableOpacity`
     margin-top: 20;
 `
 
