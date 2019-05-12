@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Switch } from 'react-native';
+import { Text, Switch, AsyncStorage } from 'react-native';
 
 import Tabs from '../../Components/Tabs';
 import { Container, ConfigCard, ConfigText, ConfigSwitch } from './styles';
@@ -12,10 +12,15 @@ export default class Menu extends React.Component {
       super(props);
       this.state = { darkMode: false };
       this.onControlChange = this.onControlChange.bind(this);
+      AsyncStorage.getItem(darkMode, (err, data) => {
+          this.state.darkMode = boolean(data);
+      })
+
 
   }
 
     onControlChange(value) {
+        await AsyncStorage.setItem(darkMode, !this.state.darkMode);
         return this.setState({
             darkMode: !this.state.darkMode
         });

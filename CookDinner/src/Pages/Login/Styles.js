@@ -54,3 +54,14 @@ export const NoAccountText = styled.Text`
     font-size: 20;
     font-weight: bold;
 `
+
+export const RemindMeContainer = styled.View`
+    flex-direction: row;
+    padding: 10 0;
+`
+
+export const RemindMeText = styled.Text`
+    align-self: center;
+    font-size: 15;
+    font-weight: bold;
+`

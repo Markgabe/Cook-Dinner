@@ -3,6 +3,7 @@ import { AsyncStorage } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import ImageCropPicker from 'react-native-image-crop-picker';
 import Icon from 'react-native-fa-icons';
+import { sha256 } from 'react-native-sha256';
 
 import { Container, Content, TextBox, AvatarImage,
         RegisterButton, RegisterButtonText, RegisterButtonContainer,
@@ -68,7 +69,7 @@ export default class Register extends Component {
             },
             body: JSON.stringify({
                 email: user,
-                password: pass,
+                password: sha256(pass),
                 name: name
             })
         });
@@ -78,7 +79,7 @@ export default class Register extends Component {
         await AsyncStorage.setItem('Token-Type', response.headers.map['token-type']);
         await AsyncStorage.setItem('Uid', response.headers.map['uid']);
 
-        (response.status === 200) ? this.props.navigation.replace("Home") : alert("Não foi possível concluir o registro!");
+        (response.status === 200) ? this.props.navigation.replace("App") : alert("Não foi possível concluir o registro!");
     }
 
     render() {
@@ -137,7 +138,7 @@ export default class Register extends Component {
                 </Content>
 
                 <HasAccountContainer>
-                    <HasAccountButton onPress={() => this.props.navigation.replace('Login')}>
+                    <HasAccountButton onPress={() => this.props.navigation.navigate('Login')}>
                         <HasAccountText>Já possui uma conta? Clique aqui!</HasAccountText>
                     </HasAccountButton>
                 </HasAccountContainer>
