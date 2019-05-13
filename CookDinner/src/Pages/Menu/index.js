@@ -20,7 +20,7 @@ export default class Menu extends React.Component {
   }
 
     onControlChange(value) {
-        await AsyncStorage.setItem(darkMode, !this.state.darkMode);
+        AsyncStorage.setItem(darkMode, !this.state.darkMode);
         return this.setState({
             darkMode: !this.state.darkMode
         });

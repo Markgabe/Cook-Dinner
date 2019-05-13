@@ -16,22 +16,24 @@ export default class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.fs = require('fs');
+        this.fs = require('react-native-fs');
         this.state = {username: '', password: '', remindMe: false};
         this.onControlChange = this.onControlChange.bind(this);
 
-        this.fs.exists('../../Data/user.json', function(exists){
+        this.fs.exists(this.fs.DocumentDirectoryPath + '/user.json', 'utf8', (exists) => {
             if(exists){
-                fs.readFile('../../Data/user.json', function readFileCallback(err, data){
-                    if (err){
-                        console.log(err);
-                    } else {
-                    this.state = JSON.parse(data);
-                    this.state.password = '';
-                    }
+                this.fs.readFile(this.fs.DocumentDirectoryPath + '/user.json', 'utf8').then((result) => {
+                    this.setState(JSON.parse(result));
+                    this.seState({password: ''});
+                    if(!this.state.remindMe) this.setState({username: ''});
+                })
+                .catch((err) => {
+                    this.fs.writeFile(this.fs.DocumentDirectoryPath + '/user.json', JSON.stringify(this.state), 'utf8');
                 });
+            } else {
+                this.fs.writeFile(this.fs.DocumentDirectoryPath + '/user.json', JSON.stringify(this.state), 'utf8');
             }
-        });
+        })
     }
 
 
@@ -63,7 +65,9 @@ export default class Login extends Component {
 
         if(response.status === 200){
             if(this.remindMe){
-                this.fs.writeFile('../../Data/user.json', JSON.stringify(this.state));
+                this.fs.writeFile(this.fs.DocumentDirectoryPath + '/user.json', JSON.stringify({username: this.state.username, password: sha256(this.state.password), remindMe: true}), 'utf8');
+            } else {
+                this.fs.writeFile(this.fs.DocumentDirectoryPath + '/user.json', JSON.stringify({username: '', password: '', remindMe: false}), 'utf8')
             }
             this.props.navigation.navigate('App');
         } else {

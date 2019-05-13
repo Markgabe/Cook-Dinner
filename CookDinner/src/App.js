@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBottomTabNavigator, createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator, createStackNavigator } from 'react-navigation';
 
 import Login from './Pages/Login';
 import Register from './Pages/Register';
@@ -8,7 +8,7 @@ import NewRecipe from './Pages/NewRecipe';
 import Notifications from './Pages/Notifications';
 import Menu from './Pages/Menu';
 import QRScreen from './Pages/QRScreen';
-import AuthScreen from '.Pages/AuthScreen';
+import AuthScreen from './Pages/AuthLoadingScreen';
 
 const AppStack = createStackNavigator(
   {
@@ -35,7 +35,7 @@ const LoginStack = createStackNavigator(
 
 const AuthStack = createStackNavigator(
   {
-    AuthLoadingScreen: AuthLoadingScreen
+    AuthLoadingScreen: AuthScreen
   },
 );
 

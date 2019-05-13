@@ -79,7 +79,7 @@ export default class Register extends Component {
         await AsyncStorage.setItem('Token-Type', response.headers.map['token-type']);
         await AsyncStorage.setItem('Uid', response.headers.map['uid']);
 
-        (response.status === 200) ? this.props.navigation.replace("App") : alert("Não foi possível concluir o registro!");
+        (response.status === 200) ? this.props.navigation.navigate("App") : alert("Não foi possível concluir o registro!");
     }
 
     render() {
