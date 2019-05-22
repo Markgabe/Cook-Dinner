@@ -30,22 +30,15 @@ export default class AuthScreen extends Component{
 
     async validar(user, pass) {
 
-        const response = await fetch('https://receitas-dos-leks.herokuapp.com/auth/sign_in', {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: user,
-                password: pass
+        const response = await fetch('https://receitas-dos-leks.herokuapp.com/login', {
+        method: "POST",
+        body: JSON.stringify({
+            email: user,
+            password: pass
             })
         });
     
-        await AsyncStorage.setItem('Access-Token', response.headers.map['access-token']);
-        await AsyncStorage.setItem('Client', response.headers.map['client']);
-        await AsyncStorage.setItem('Token-Type', response.headers.map['token-type']);
-        await AsyncStorage.setItem('Uid', response.headers.map['uid']);
+        await AsyncStorage.setItem('Token', response.headers.map['access-token']);
 
         (response.status === 200) ? this.props.navigation.replace("App") : this.props.navigate("Login");
         

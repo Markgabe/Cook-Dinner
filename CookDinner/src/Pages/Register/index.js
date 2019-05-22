@@ -60,26 +60,36 @@ export default class Register extends Component {
         });
     }
 
-    async cadastrar(user, pass, name) {
-        const response = await fetch('https://receitas-dos-leks.herokuapp.com/auth/', {
+    async cadastrar(user, pass, name, image) {
+        const formData = new FormData();
+        formData.append('image', image);
+
+        const response = await fetch('https://receitas-dos-leks.herokuapp.com/register', {
             method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify({
                 email: user,
                 password: sha256(pass),
-                name: name
+                name: name,
+                image: formData
             })
         });
 
-        await AsyncStorage.setItem('Access-Token', response.headers.map['access-token']);
-        await AsyncStorage.setItem('Client', response.headers.map['client']);
-        await AsyncStorage.setItem('Token-Type', response.headers.map['token-type']);
-        await AsyncStorage.setItem('Uid', response.headers.map['uid']);
+        await AsyncStorage.setItem('Token', response.headers.map['access-token']);
 
-        (response.status === 200) ? this.props.navigation.navigate("App") : alert("Não foi possível concluir o registro!");
+        switch(response.status){
+            case 200:
+                this.props.navigation.navigate('App');
+                break;
+            case 400:
+                alert('Preencha todos os campos para criar uma conta');
+                break;
+            case 401:
+                alert('Login ou senha inválidos');
+                break;
+            default:
+                alert('erro desconhecido, tente novamente mais tarde');
+                break;
+        }
     }
 
     render() {
@@ -109,13 +119,6 @@ export default class Register extends Component {
                         placeholder="E-mail"
                         onChangeText={(email) => this.setState({email})}
                         value={this.state.email}
-                        underlineColorAndroid= "#000"
-                    />
-
-                    <TextBox
-                        placeholder="Ano de Nascimento"
-                        onChangeText={(birth) => this.setState({birth})}
-                        value={this.state.birth}
                         underlineColorAndroid= "#000"
                     />
 

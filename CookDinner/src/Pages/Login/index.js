@@ -45,22 +45,15 @@ export default class Login extends Component {
 
     async validar(user, pass) {
 
-    const response = await fetch('https://receitas-dos-leks.herokuapp.com/auth/sign_in', {
+    const response = await fetch('https://receitas-dos-leks.herokuapp.com/login', {
         method: "POST",
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
         body: JSON.stringify({
             email: user,
             password: sha256(pass)
         })
     });
 
-        await AsyncStorage.setItem('Access-Token', response.headers.map['access-token']);
-        await AsyncStorage.setItem('Client', response.headers.map['client']);
-        await AsyncStorage.setItem('Token-Type', response.headers.map['token-type']);
-        await AsyncStorage.setItem('Uid', response.headers.map['uid']);
+        await AsyncStorage.setItem('Token', response.headers.map['access-token']);
         
 
         if(response.status === 200){

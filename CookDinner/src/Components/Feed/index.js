@@ -13,6 +13,7 @@ export default function Feed(arrayRecipes){
         <Container 
         data={arrayRecipes}
         renderItem={renderRecipe}
-        keyExtractor={item => item.id}/>
+        keyExtractor={item => item.id}
+        />
     );
 }
