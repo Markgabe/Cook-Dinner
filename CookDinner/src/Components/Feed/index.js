@@ -1,11 +1,18 @@
 import React from 'react';
 
-import {Container, FeedCard} from './styles';
+import Card from '../Card';
+import { Container } from './styles';
 
-export default function Feed(){
+const renderRecipe = ({ item }) => (
+    <Card recipe={item}/>
+);
+
+export default function Feed(arrayRecipes){
+    
     return(
-        <Container>
-            <FeedCard>Futuro Feed</FeedCard>
-        </Container>
+        <Container 
+        data={arrayRecipes}
+        renderItem={renderRecipe}
+        keyExtractor={item => item.name}/>
     );
 }
