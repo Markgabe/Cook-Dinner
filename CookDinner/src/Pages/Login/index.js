@@ -16,24 +16,8 @@ export default class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.fs = require('react-native-fs');
         this.state = {username: '', password: '', remindMe: false};
         this.onControlChange = this.onControlChange.bind(this);
-
-        this.fs.exists(this.fs.DocumentDirectoryPath + '/user.json', 'utf8', (exists) => {
-            if(exists){
-                this.fs.readFile(this.fs.DocumentDirectoryPath + '/user.json', 'utf8').then((result) => {
-                    this.setState(JSON.parse(result));
-                    this.seState({password: ''});
-                    if(!this.state.remindMe) this.setState({username: ''});
-                })
-                .catch((err) => {
-                    this.fs.writeFile(this.fs.DocumentDirectoryPath + '/user.json', JSON.stringify(this.state), 'utf8');
-                });
-            } else {
-                this.fs.writeFile(this.fs.DocumentDirectoryPath + '/user.json', JSON.stringify(this.state), 'utf8');
-            }
-        })
     }
 
 
@@ -45,29 +29,20 @@ export default class Login extends Component {
 
     async validar(user, pass) {
 
-    const response = await fetch('https://receitas-dos-leks.herokuapp.com/login', {
-        method: "POST",
-        body: JSON.stringify({
-            email: user,
-            password: sha256(pass)
-        })
-    });
+        const response = await fetch('https://receitas-dos-leks.herokuapp.com/login', {
+            method: "POST",
+            body: JSON.stringify({
+                email: user,
+                password: sha256(pass)
+            })
+        });
 
         await AsyncStorage.setItem('Token', response.headers.map['access-token']);
-        
+        AsyncStorage.setItem('RemindMe', this.state.remindMe);
 
-        if(response.status === 200){
-            if(this.remindMe){
-                this.fs.writeFile(this.fs.DocumentDirectoryPath + '/user.json', JSON.stringify({username: this.state.username, password: sha256(this.state.password), remindMe: true}), 'utf8');
-            } else {
-                this.fs.writeFile(this.fs.DocumentDirectoryPath + '/user.json', JSON.stringify({username: '', password: '', remindMe: false}), 'utf8')
-            }
-            this.props.navigation.navigate('App');
-        } else {
-            alert("Usuário ou senha inválidos!");
+        (response.status === 200) ? this.props.navigation.navigate('App') : alert("Usuário ou senha inválidos!");
+
         }
-
-    }
 
     render() {
         return (

@@ -19,7 +19,7 @@ export default class Home extends Component {
     arrayRecipes = await fetch('https://receitas-dos-leks.herokuapp.com/recipes', {
         method: "GET",
         headers: {
-            'Authorization': this.state.token
+            'Authorization': 'Bearer ${this.state.token}'
         }
     });
 

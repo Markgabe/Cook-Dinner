@@ -16,7 +16,7 @@ export default class Register extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { email: '', password: '', name: '', birth: '', avatarSource: require('../../Assets/profile.png') };
+        this.state = { email: '', password: '', name: '', avatarSource: require('../../Assets/profile.png') };
     }
 
     chooseFile = () => {
@@ -74,6 +74,7 @@ export default class Register extends Component {
             })
         });
 
+        AsyncStorage.setItem('RemindMe', false);
         await AsyncStorage.setItem('Token', response.headers.map['access-token']);
 
         switch(response.status){

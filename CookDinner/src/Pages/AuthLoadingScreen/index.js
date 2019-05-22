@@ -10,37 +10,31 @@ export default class AuthScreen extends Component{
 
     constructor(props) {
         super(props);
-        this.fs = require('react-native-fs');
-        this.state = {username: '', password: '', remindMe: false};
-
-        this.fs.exists(this.fs.DocumentDirectoryPath + '/user.json', 'utf8', (exists) => {
-            if(exists){
-                this.fs.readFile(this.fs.DocumentDirectoryPath + '/user.json', 'utf8').then((result) => {
-                    this.setState(JSON.parse(result));
-                })
-                .catch((err) => {
-                    this.fs.writeFile(this.fs.DocumentDirectoryPath + '/user.json', JSON.stringify(this.state), 'utf8');
-                });
-            } else {
-                this.fs.writeFile(this.fs.DocumentDirectoryPath + '/user.json', JSON.stringify(this.state), 'utf8');
-            }
+        this.state = {username: '', password: '', token: '', remindMe: false};
+        AsyncStorage.getItem('Token', (err, data) => {
+            (!err) ? this.state.token = data : this.props.navigation.navigate('Login')
         })
-        
     }
 
     async validar(user, pass) {
 
-        const response = await fetch('https://receitas-dos-leks.herokuapp.com/login', {
-        method: "POST",
-        body: JSON.stringify({
-            email: user,
-            password: pass
-            })
+        const response = await fetch('https://receitas-dos-leks.herokuapp.com/recipes', {
+            method: "POST",
+            header: {
+                Authorization: 'Bearer ${this.state.token}'
+            }
         });
     
         await AsyncStorage.setItem('Token', response.headers.map['access-token']);
-
-        (response.status === 200) ? this.props.navigation.replace("App") : this.props.navigate("Login");
+        await AsyncStorage.getItem('RemindMe', (err, data) => {
+            (!err) ? this.state.remindMe = data : this.props.navigation.navigate('login')
+        })
+        if(response.status === 200 && this.state.remindMe){ 
+            this.props.navigation.replace("App") 
+        } else {
+            AsyncStorage.setItem('Token', 0);
+            this.props.navigation.navigate("Login");
+        }
         
     }
     
