@@ -31,7 +31,7 @@ export const LoginButtonText = styled.Text`
 export const LoginButton = styled.TouchableHighlight`
     width: 100%;
     height: 40;
-    border-color: #777;
+    border-color: #CCC;
     border-width: 2;
     border-radius: 10;
     background-color: #000;
@@ -41,17 +41,12 @@ export const LoginButton = styled.TouchableHighlight`
 
 export const LoginButtonContainer = styled.View`
     margin-top: 30;
-    align-self: center;
-    width: 300;
+    align-self: stretch;
 `
 
 export const NoAccountContainer = styled.View`
-    margin-top: auto;
-    background-color: #AAA;
-    width: 100%;
     flex-direction: row;
-    justify-content: center;
-    height: 22%;
+    margin-top: 20;
 `
 
 export const NoAccountText = styled.Text`
@@ -60,19 +55,13 @@ export const NoAccountText = styled.Text`
     font-weight: bold;
 `
 
-export const NoAccountButton = styled.TouchableOpacity`
-    margin-top: 20;
-`
-
 export const RemindMeContainer = styled.View`
     flex-direction: row;
-    margin-top: 15;
+    padding: 10 0;
 `
 
 export const RemindMeText = styled.Text`
     align-self: center;
-    font-size: 17;
-    margin-left: 50;
-    margin-right: 10;
+    font-size: 15;
     font-weight: bold;
 `
