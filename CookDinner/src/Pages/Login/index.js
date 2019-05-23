@@ -4,7 +4,7 @@ import { sha256 } from 'react-native-sha256';
 import { Switch } from 'react-native-gesture-handler';
 
 import Logo from '../../Components/Logo';
-import { Container, Content, TextBox, 
+import { Container, Content, TextBox,
         LoginButtonContainer, LoginButtonText, LoginButton,
         RemindMeContainer, RemindMeText,
         NoAccountContainer, NoAccountText, NoAccountButton } from './styles';
@@ -35,11 +35,14 @@ export default class Login extends Component {
                 senha: String(sha256(pass))
             })
         });
+        const json = await response.json();
+        const token = json['access-token'];
 
-        await AsyncStorage.setItem('Token', response.headers.map['access-token']);
-        AsyncStorage.setItem('RemindMe', this.state.remindMe);
+        await AsyncStorage.setItem('token', token);
+        console.log(this.state.remindMe);
+        AsyncStorage.setItem('remindMe', this.state.remindMe);
 
-        (response.status === 200) ? this.props.navigation.navigate('App') : alert("Usuário ou senha inválidos!");
+        (response.status == 200) ? this.props.navigation.navigate('App') : alert("Usuário ou senha inválidos!");
 
         }
 

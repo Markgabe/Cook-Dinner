@@ -67,8 +67,8 @@ export default class Register extends Component {
         const response = await fetch('https://cookdinnerapi.herokuapp.com/sign_up', {
             method: "POST",
             body: JSON.stringify({
-                email: 'meupau@subindo.com',
-                senha: 'meupautaduro'
+                email: user,
+                senha: String(sha256(pass))
             })
         });
 

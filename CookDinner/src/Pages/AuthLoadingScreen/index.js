@@ -14,28 +14,31 @@ export default class AuthLoadingScreen extends Component {
     }
 
     async validar() {
-        this.state.token = await AsyncStorage.getItem('Token');
-        
+        const tokenAuth = await AsyncStorage.getItem('token');
+        this.setState({token : tokenAuth});
+        const remind = await AsyncStorage.getItem('remindMe');
+        this.setState({remindMe : remind});
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", this.state.token);
         const response = await fetch('https://cookdinnerapi.herokuapp.com/recipes', {
-            method: "POST",
-            header: {
-                Authorization: 'Bearer ${this.state.token}'
-            }
+            method: "GET",
+            headers: myHeaders
         });
+        console.log(this.state.remindMe);
+        console.log(response.status);
 
         try{
-            this.state.remindMe = await AsyncStorage.getItem('RemindMe');
-            if(response.status === 200 && this.state.remindMe){ 
+            this.state.remindMe = await AsyncStorage.getItem('remindMe');
+            if(response.status == 200 && this.state.remindMe){
                 this.props.navigation.navigate("App");
             }
         } catch(err){
             alert(err);
         } finally {
-            AsyncStorage.setItem('Token', 0);
+            AsyncStorage.setItem('token', 0);
             this.props.navigation.navigate('SignIn');
         }
     }
-    
     render(){
         this.validar();
         return(
