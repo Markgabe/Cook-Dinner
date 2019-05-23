@@ -24,11 +24,13 @@ export default class AuthLoadingScreen extends Component {
             method: "GET",
             headers: myHeaders
         });
+        if(this.state.time >= 10000) return;
 
         if(response.status == 200){
             this.props.navigation.navigate("App");
             return;
         }
+
         AsyncStorage.setItem('token', 0);
         this.props.navigation.navigate('SignIn');   
     }

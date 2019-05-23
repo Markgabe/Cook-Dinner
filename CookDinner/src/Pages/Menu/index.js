@@ -6,25 +6,20 @@ import { Container, ConfigCard, ConfigText, LogOutButton, LogOutText } from './s
 
 export default class Menu extends React.Component {
 
-  static navigationOptions = { header: null };
+    static navigationOptions = { header: null };
 
-  constructor(props) {
-      super(props);
-      this.state = { darkMode: false };
-      this.onControlChange = this.onControlChange.bind(this);
-      AsyncStorage.getItem('darkMode', (err, data) => {
-          this.state.darkMode = data;
-      })
+    constructor(props) {
+        super(props);
+        this.state = { darkMode: false };
+        this.onControlChange = this.onControlChange.bind(this);
+        AsyncStorage.getItem('darkMode', (err, data) => {
+            this.state.darkMode = data;
+        })
     }
 
     onControlChange(value) {
         AsyncStorage.setItem('darkMode', !this.state.darkMode);
         this.setState({ darkMode: !this.state.darkMode});
-    }
-
-    logOut(){
-        AsyncStorage.setItem('token', 0);
-        this.props.navigation.navigate('SignIn');
     }
 
     render(){
@@ -38,7 +33,10 @@ export default class Menu extends React.Component {
                     />
                 </ConfigCard>
 
-                <LogOutButton onPress={this.logOut}> 
+                <LogOutButton onPress={() => {
+                    AsyncStorage.setItem('token', 0);
+                    this.props.navigation.navigate('SignIn');
+                }}> 
                     <LogOutText>Sair</LogOutText>
                 </LogOutButton>
 

@@ -25,7 +25,7 @@ export const LogOutButton = styled.TouchableOpacity`
     border-width: 1;
     align-items: center;
     justify-content: center;
-    margin-top: auto;
+    margin-top: 30;
     width: 95%;
     height: 50;
     align-self: center;

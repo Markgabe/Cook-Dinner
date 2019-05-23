@@ -1,9 +1,8 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-    font-size: 30;
-    font-weight: bold;
-    flex: 1;
+    width: 100%;
+    height: 100%;
 `
 
 export const TopBar = styled.View`
