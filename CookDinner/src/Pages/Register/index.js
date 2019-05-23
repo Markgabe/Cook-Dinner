@@ -64,7 +64,7 @@ export default class Register extends Component {
         const formData = new FormData();
         formData.append('image', image);
 
-        const response = await fetch('https://receitas-dos-leks.herokuapp.com/register', {
+        const response = await fetch('https://cookdinnerapi2.herokuapp.com/register', {
             method: "POST",
             body: JSON.stringify({
                 email: user,

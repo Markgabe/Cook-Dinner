@@ -58,7 +58,7 @@ const cadastrarReceita = async (name, description) => {
 
   console.log(obj);
 
-  const response = await fetch('https://receitas-dos-leks.herokuapp.com/register_recipe', {
+  const response = await fetch('https://cookdinnerapi2.herokuapp.com/register_recipe', {
     method: "POST",
     headers: obj,
     body: JSON.stringify({

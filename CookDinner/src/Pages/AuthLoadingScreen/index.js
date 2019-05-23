@@ -18,7 +18,7 @@ export default class AuthLoadingScreen extends Component {
 
     async validar() {
 
-        const response = await fetch('https://receitas-dos-leks.herokuapp.com/recipes', {
+        const response = await fetch('https://cookdinnerapi2.herokuapp.com/recipes', {
             method: "POST",
             header: {
                 Authorization: 'Bearer ${this.state.token}'
