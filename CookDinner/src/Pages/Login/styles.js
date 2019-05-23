@@ -15,7 +15,7 @@ export const TextBox = styled.TextInput`
     background-color: #FFF;
     margin-top: 10;
     font-size: 20;
-    width: 300;
+    width: 80%;
     text-align: center;
     border-color: gray;
     border-width: 2;
@@ -28,10 +28,10 @@ export const LoginButtonText = styled.Text`
     color: #FFF;
 `
 
-export const LoginButton = styled.TouchableHighlight`
-    width: 100%;
+export const LoginButton = styled.TouchableOpacity`
+    width: 80%;
     height: 40;
-    border-color: #CCC;
+    border-color: #AAA;
     border-width: 2;
     border-radius: 10;
     background-color: #000;
@@ -45,23 +45,20 @@ export const LoginButtonContainer = styled.View`
 `
 
 export const NoAccountContainer = styled.View`
+    margin-top: 62;
+    background-color: #AAA;
+    width: 100%;
     flex-direction: row;
+    justify-content: center;
+    height: 70;
+`
+
+export const NoAccountButton = styled.TouchableOpacity`
     margin-top: 20;
 `
 
 export const NoAccountText = styled.Text`
     align-self: center;
     font-size: 20;
-    font-weight: bold;
-`
-
-export const RemindMeContainer = styled.View`
-    flex-direction: row;
-    padding: 10 0;
-`
-
-export const RemindMeText = styled.Text`
-    align-self: center;
-    font-size: 15;
     font-weight: bold;
 `

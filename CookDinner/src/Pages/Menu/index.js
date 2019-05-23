@@ -2,32 +2,28 @@ import React from 'react';
 import { Text, Switch, AsyncStorage } from 'react-native';
 
 import Tabs from '../../Components/Tabs';
-import { Container, ConfigCard, ConfigText, ConfigSwitch } from './styles';
+import { Container, ConfigCard, ConfigText, LogOutButton, LogOutText } from './styles';
 
 export default class Menu extends React.Component {
 
-  static navigationOptions = { header: null };
+    static navigationOptions = { header: null };
 
-  constructor(props) {
-      super(props);
-      this.state = { darkMode: false };
-      this.onControlChange = this.onControlChange.bind(this);
-      AsyncStorage.getItem(darkMode, (err, data) => {
-          this.state.darkMode = boolean(data);
-      })
-
-
-  }
-
-    onControlChange(value) {
-        AsyncStorage.setItem(darkMode, !this.state.darkMode);
-        return this.setState({
-            darkMode: !this.state.darkMode
-        });
+    constructor(props) {
+        super(props);
+        this.state = { darkMode: false };
+        this.onControlChange = this.onControlChange.bind(this);
+        AsyncStorage.getItem('darkMode', (err, data) => {
+            this.state.darkMode = data;
+        })
     }
 
-  render(){
-      return (
+    onControlChange(value) {
+        AsyncStorage.setItem('darkMode', !this.state.darkMode);
+        this.setState({ darkMode: !this.state.darkMode});
+    }
+
+    render(){
+        return (
             <Container>
                 <ConfigCard>
                     <ConfigText>Dark mode: {this.state.darkMode ? 'on' : 'off'}</ConfigText>
@@ -36,6 +32,14 @@ export default class Menu extends React.Component {
                             onValueChange={this.onControlChange}
                     />
                 </ConfigCard>
+
+                <LogOutButton onPress={() => {
+                    AsyncStorage.setItem('token', 0);
+                    this.props.navigation.navigate('SignIn');
+                }}> 
+                    <LogOutText>Sair</LogOutText>
+                </LogOutButton>
+
                 <Tabs screen='Menu' nav={this.props.navigation.navigate}/>
             </Container>
       );

@@ -16,7 +16,7 @@ export default class Home extends Component {
         AsyncStorage.getItem('Token', (err, data) => {this.state.token = data});
     }
 
-    arrayRecipes = fetch('https://receitas-dos-leks.herokuapp.com/recipes', {
+    arrayRecipes = fetch('https://cookdinnerapi.herokuapp.com/recipes', {
         method: "GET",
         headers: {
             'Authorization': 'Bearer ${this.state.token}'

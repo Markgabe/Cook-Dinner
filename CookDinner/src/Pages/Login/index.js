@@ -4,9 +4,8 @@ import { sha256 } from 'react-native-sha256';
 import { Switch } from 'react-native-gesture-handler';
 
 import Logo from '../../Components/Logo';
-import { Container, Content, TextBox, 
+import { Container, Content, TextBox,
         LoginButtonContainer, LoginButtonText, LoginButton,
-        RemindMeContainer, RemindMeText,
         NoAccountContainer, NoAccountText, NoAccountButton } from './styles';
 
 export default class Login extends Component {
@@ -15,44 +14,37 @@ export default class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {username: '', password: '', remindMe: false};
-        this.onControlChange = this.onControlChange.bind(this);
-    }
-
-
-    onControlChange(value) {
-        return this.setState({
-            remindMe: !this.state.remindMe
-        });
+        this.state = {username: '', password: ''};
     }
 
     async validar(user, pass) {
 
-        const response = await fetch('https://receitas-dos-leks.herokuapp.com/login', {
+        const response = await fetch('https://cookdinnerapi.herokuapp.com/login', {
             method: "POST",
             body: JSON.stringify({
                 email: user,
-                password: sha256(pass)
+                senha: String(sha256(pass))
             })
         });
+        const json = await response.json();
+        const token = json['access-token'];
 
-        await AsyncStorage.setItem('Token', response.headers.map['access-token']);
-        AsyncStorage.setItem('RemindMe', this.state.remindMe);
+        await AsyncStorage.setItem('token', token);
 
-        (response.status === 200) ? this.props.navigation.navigate('App') : alert("Usuário ou senha inválidos!");
+        (response.status == 200) ? this.props.navigation.navigate('App') : alert("Usuário ou senha inválidos!");
 
         }
 
     render() {
         return (
-            <Container>
+            <Container behavior='height'>
 
                 <Logo/>
 
                 <Content>
 
                     <TextBox
-                        placeholder="E-mail"
+                        placeholder="Usuário"
                         onChangeText={(username) => this.setState({username})}
                         value={this.state.username}
                     />
@@ -71,13 +63,6 @@ export default class Login extends Component {
                             <LoginButtonText>Logar</LoginButtonText>
                         </LoginButton>
                     </LoginButtonContainer>
-
-                    <RemindMeContainer>
-                        <RemindMeText>Lembrar-me</RemindMeText>
-                        <Switch value={ this.state.remindMe }
-                                onValueChange={this.onControlChange}
-                        />
-                    </RemindMeContainer>
 
                     <NoAccountContainer>
                         <NoAccountButton

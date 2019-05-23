@@ -10,38 +10,40 @@ export default class AuthLoadingScreen extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {token: '', remindMe: false};
-        AsyncStorage.getItem('Token', (err, data) => {
-            (!err) ? this.state.token = data : this.props.navigation.navigate('Login')
-        })
+        this.state = {time: 0, didRequest: false}
+
+        setInterval(() => {this.setState({ time: this.state.time + 1000 })}, 1000)
     }
 
     async validar() {
 
-        const response = await fetch('https://receitas-dos-leks.herokuapp.com/recipes', {
-            method: "POST",
-            header: {
-                Authorization: 'Bearer ${this.state.token}'
-            }
+        const tokenAuth = await AsyncStorage.getItem('token');
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", tokenAuth);
+        const response = await fetch('https://cookdinnerapi.herokuapp.com/recipes', {
+            method: "GET",
+            headers: myHeaders
         });
-    
-        //AsyncStorage.setItem('Token', response.headers.map['access-token']);
+        if(this.state.time >= 10000) return;
 
-        try{
-            this.state.remindMe = await AsyncStorage.getItem('RemindMe');
-            if(response.status === 200 && this.state.remindMe){ 
-                this.props.navigation.navigate("App");
-            }
-        } catch(err){
-            alert(err);
-        } finally {
-            AsyncStorage.setItem('Token', 0);
+        if(response.status == 200){
+            this.props.navigation.navigate("App");
+            return;
+        }
+
+        AsyncStorage.setItem('token', 0);
+        this.props.navigation.navigate('SignIn');   
+    }
+
+    render(){
+        if(this.state.time >= 10000) {
+            alert('Não foi possível conectar ao servidor');
             this.props.navigation.navigate('SignIn');
         }
-    }
-    
-    render(){
-        this.validar();
+        if(!this.state.didRequest){
+            this.setState({didRequest: true });
+            this.validar(this.state.time);
+        }
         return(
             <Container>
                 <Logo />

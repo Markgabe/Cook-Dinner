@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
     background-color: #CCC;
-    margin-top: auto;
     flex-direction: row;
     justify-content: space-evenly;
     margin-top: auto;
