@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled.FlatList`
     background-color: #FFF;
-    align-items: center;
     margin-top: 30;
 `

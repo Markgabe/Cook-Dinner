@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, FlatList, Text } from 'react-native';
 import Icon from 'react-native-fa-icons';
 
 import { Container, TopBar, SearchBar, NewRecipeButton } from './styles';
 import Feed from '../../Components/Feed';
 import Tabs from '../../Components/Tabs';
+import Card from '../../Components/Card';
 
 export default class Home extends Component {
 
@@ -12,7 +13,8 @@ export default class Home extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { search: '', arrayRecipes: []};
+        this.state = { search: ''};
+        this.arrayRecipes = [{Id: 0, Nome: "Miojo", Descrição: "leitinho poo", IdUser: 5}];
         this.request();
     }
 
@@ -23,9 +25,13 @@ export default class Home extends Component {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
+        }).then(x => x.json()).then(x=>{
+            for (i in x){
+                this.arrayRecipes.push(x[i])
+            }
         });
-        this.setState({arrayRecipes: response});
-        alert(response)
+        console.log(this.arrayRecipes);
+
     }
 
     render() {
@@ -42,8 +48,10 @@ export default class Home extends Component {
                     <Icon name='plus-circle' style={{fontSize:40, color:'#FFF'}} />
                 </NewRecipeButton>
             </TopBar>
-
-            <Feed arrayRecipes={this.state.arrayRecipes}/>
+            <FlatList
+                data={this.arrayRecipes}
+                renderItem={({item}) => <Card recipe={item}/>}
+            />
             <Tabs screen='Home' nav={this.props.navigation.navigate}/>
         </Container>
     );
