@@ -7,12 +7,12 @@ export const Container = styled.KeyboardAvoidingView`
 `
 
 export const HasAccountContainer = styled.View`
-    margin-top: auto;
+    margin-top: 102;
     background-color: #AAA;
     width: 100%;
     flex-direction: row;
     justify-content: center;
-    height: 10%;
+    height: 70;
 `
 export const HasAccountText = styled.Text`
     align-self: center;
@@ -25,19 +25,21 @@ export const HasAccountButton = styled.TouchableOpacity`
 `
 
 export const TextBox = styled.TextInput`
+    background-color: #FFF;
+    margin-top: 10;
     font-size: 20;
-    background-color: transparent;
-    margin-top: 20;
     width: 80%;
-    text-align: left;
-    color: #000;
+    text-align: center;
+    border-color: gray;
+    border-width: 2;
+    border-radius: 10;
 `
 
 export const RegisterButtonContainer = styled.View`
     margin-top: 30;
     align-self: stretch;
 `
-export const RegisterButton = styled.TouchableHighlight`
+export const RegisterButton = styled.TouchableOpacity`
     width: 80%;
     height: 40;
     border-color: #CCC;
@@ -68,6 +70,7 @@ export const AvatarImage = styled.Image`
 
 export const AvatarContainer = styled.View`
     margin-top: 30;
+    margin-bottom: 50;
 `
 
 export const ChooseFileButton = styled.TouchableOpacity`

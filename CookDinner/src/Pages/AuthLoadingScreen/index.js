@@ -11,21 +11,17 @@ export default class AuthLoadingScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {token: '', remindMe: false};
-        AsyncStorage.getItem('Token', (err, data) => {
-            (!err) ? this.state.token = data : this.props.navigation.navigate('Login')
-        })
     }
 
     async validar() {
-
-        const response = await fetch('https://cookdinnerapi2.herokuapp.com/recipes', {
+        this.state.token = await AsyncStorage.getItem('Token');
+        
+        const response = await fetch('https://cookdinnerapi.herokuapp.com/recipes', {
             method: "POST",
             header: {
                 Authorization: 'Bearer ${this.state.token}'
             }
         });
-    
-        //AsyncStorage.setItem('Token', response.headers.map['access-token']);
 
         try{
             this.state.remindMe = await AsyncStorage.getItem('RemindMe');

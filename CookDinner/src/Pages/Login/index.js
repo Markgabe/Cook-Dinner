@@ -28,11 +28,11 @@ export default class Login extends Component {
 
     async validar(user, pass) {
 
-        const response = await fetch('https://cookdinnerapi2.herokuapp.com/login', {
+        const response = await fetch('https://cookdinnerapi.herokuapp.com/login', {
             method: "POST",
             body: JSON.stringify({
                 email: user,
-                password: sha256(pass)
+                senha: String(sha256(pass))
             })
         });
 
@@ -45,7 +45,7 @@ export default class Login extends Component {
 
     render() {
         return (
-            <Container>
+            <Container behavior='height'>
 
                 <Logo/>
 

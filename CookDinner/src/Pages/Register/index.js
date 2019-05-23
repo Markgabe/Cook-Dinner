@@ -64,13 +64,11 @@ export default class Register extends Component {
         const formData = new FormData();
         formData.append('image', image);
 
-        const response = await fetch('https://cookdinnerapi2.herokuapp.com/register', {
+        const response = await fetch('https://cookdinnerapi.herokuapp.com/sign_up', {
             method: "POST",
             body: JSON.stringify({
-                email: user,
-                password: sha256(pass),
-                name: name,
-                image: formData
+                email: 'meupau@subindo.com',
+                senha: 'meupautaduro'
             })
         });
 
@@ -95,7 +93,7 @@ export default class Register extends Component {
 
     render() {
         return (
-            <Container behavior="height">
+            <Container behavior='height'>
 
                 <AvatarContainer>
                     <ChooseFileButton
@@ -113,14 +111,12 @@ export default class Register extends Component {
                         placeholder="Nome"
                         onChangeText={(name) => this.setState({name})}
                         value={this.state.name}
-                        underlineColorAndroid= "#000"
                     />
 
                     <TextBox
                         placeholder="E-mail"
                         onChangeText={(email) => this.setState({email})}
                         value={this.state.email}
-                        underlineColorAndroid= "#000"
                     />
 
                     <TextBox
@@ -128,13 +124,12 @@ export default class Register extends Component {
                         onChangeText={(password) => this.setState({password})}
                         value={this.state.password}
                         secureTextEntry = {true}
-                        underlineColorAndroid= "#000"
                     />
 
                     <RegisterButtonContainer>
                         <RegisterButton
                             underlayColor='#222'
-                            onPress={() => this.cadastrar(this.state.email, this.state.password, this.state.name)}
+                            onPress={() => {this.cadastrar(this.state.email, this.state.password, this.state.name, this.state.avatarSource)}}
                             >
                             <RegisterButtonText>Enviar</RegisterButtonText>
                         </RegisterButton>
