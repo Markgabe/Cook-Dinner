@@ -4,7 +4,7 @@ import Card from '../Card';
 import { Container } from './styles';
 
 const renderRecipe = ({ item }) => (
-    <Card recipe={item}/>
+    <Card recipe={JSON.parse(item)}/>
 );
 
 export default function Feed(arrayRecipes){

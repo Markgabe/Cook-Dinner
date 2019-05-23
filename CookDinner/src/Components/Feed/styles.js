@@ -5,8 +5,3 @@ export const Container = styled.View`
     align-items: center;
     margin-top: 30;
 `
-
-export const FeedCard = styled.Text`
-    font-size: 30;
-    font-weight: bold;
-`

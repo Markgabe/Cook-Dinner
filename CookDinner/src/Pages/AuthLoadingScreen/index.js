@@ -20,11 +20,11 @@ export default class AuthLoadingScreen extends Component {
         const tokenAuth = await AsyncStorage.getItem('token');
         var myHeaders = new Headers();
         myHeaders.append("Authorization", tokenAuth);
-        const response = await fetch('https://cookdinnerapi.herokuapp.com/recipes', {
+        const response = await fetch('https://cookdinnerapi.herokuapp.com/cred', {
             method: "GET",
             headers: myHeaders
         });
-        if(this.state.time >= 10000) return;
+        if(this.state.time >= 7000) return;
 
         if(response.status == 200){
             this.props.navigation.navigate("App");
@@ -36,7 +36,7 @@ export default class AuthLoadingScreen extends Component {
     }
 
     render(){
-        if(this.state.time >= 10000) {
+        if(this.state.time >= 7000) {
             alert('Não foi possível conectar ao servidor');
             this.props.navigation.navigate('SignIn');
         }

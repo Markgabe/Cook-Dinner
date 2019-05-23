@@ -12,16 +12,21 @@ export default class Home extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { search: '', token: '', arrayRecipes: []};
-        AsyncStorage.getItem('Token', (err, data) => {this.state.token = data});
+        this.state = { search: '', arrayRecipes: []};
+        this.request();
     }
 
-    arrayRecipes = fetch('https://cookdinnerapi.herokuapp.com/recipes', {
-        method: "GET",
-        headers: {
-            'Authorization': 'Bearer ${this.state.token}'
-        }
-    });
+    async request(){
+        let token = await AsyncStorage.getItem('token');
+        response = await fetch('https://cookdinnerapi.herokuapp.com/recipes', {
+            method: "GET",
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        this.setState({arrayRecipes: response});
+        alert(response)
+    }
 
     render() {
         return (
