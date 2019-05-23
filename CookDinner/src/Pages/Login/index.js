@@ -3,7 +3,6 @@ import { AsyncStorage } from 'react-native';
 import { sha256 } from 'react-native-sha256';
 import { Switch } from 'react-native-gesture-handler';
 
-import Home from '../Home';
 import Logo from '../../Components/Logo';
 import { Container, Content, TextBox, 
         LoginButtonContainer, LoginButtonText, LoginButton,
@@ -75,8 +74,7 @@ export default class Login extends Component {
 
                     <RemindMeContainer>
                         <RemindMeText>Lembrar-me</RemindMeText>
-                        <Switch style={{alignSelf: 'center'}}
-                                value={ this.state.remindMe }
+                        <Switch value={ this.state.remindMe }
                                 onValueChange={this.onControlChange}
                         />
                     </RemindMeContainer>

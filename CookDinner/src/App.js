@@ -8,7 +8,7 @@ import NewRecipe from './Pages/NewRecipe';
 import Notifications from './Pages/Notifications';
 import Menu from './Pages/Menu';
 import QRScreen from './Pages/QRScreen';
-import AuthScreen from './Pages/AuthLoadingScreen';
+import AuthLoadingScreen from './Pages/AuthLoadingScreen';
 
 const AppStack = createStackNavigator(
   {
@@ -19,7 +19,7 @@ const AppStack = createStackNavigator(
     QRScreen: QRScreen
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Home'
   }
 );
 
@@ -29,22 +29,28 @@ const LoginStack = createStackNavigator(
     Register: Register
   },
   {
-    initialRouteName: 'Login',
+    initialRouteName: 'Login'
   }
 );
 
 const AuthStack = createStackNavigator(
   {
-    AuthLoadingScreen: AuthScreen
-  },
-);
-
-export default createAppContainer(createSwitchNavigator({
-    AuthLoading: AuthStack,
-    App: AppStack,
-    Login: LoginStack,
+    AuthLoading: AuthLoadingScreen
   },
   {
-    initialRouteName: 'AuthLoading',
+    initialRouteName: 'AuthLoading'
   }
-));
+);
+
+const RootStack = createSwitchNavigator(
+  {
+    Auth: AuthStack,
+    App: AppStack,
+    SignIn: LoginStack,
+  },
+  {
+    initialRouteName: 'Auth',
+  }
+);
+
+export default createAppContainer(RootStack);

@@ -143,7 +143,7 @@ export default class Register extends Component {
 
                 <HasAccountContainer>
                     <HasAccountButton onPress={() => this.props.navigation.navigate('Login')}>
-                        <HasAccountText>Já possui uma conta? Clique aqui!</HasAccountText>
+                        <HasAccountText>Já possui uma conta?</HasAccountText>
                     </HasAccountButton>
                 </HasAccountContainer>
 

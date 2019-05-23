@@ -40,7 +40,7 @@ export const RegisterButtonContainer = styled.View`
 export const RegisterButton = styled.TouchableHighlight`
     width: 80%;
     height: 40;
-    border-color: #CCC;
+    border-color: #777;
     border-width: 2;
     border-radius: 10;
     background-color: #000;

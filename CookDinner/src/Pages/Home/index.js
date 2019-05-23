@@ -13,10 +13,10 @@ export default class Home extends Component {
     constructor(props) {
         super(props);
         this.state = { search: '', token: '', arrayRecipes: []};
-        await AsyncStorage.getItem('Token', (err, data) => {this.state.token = data});
+        AsyncStorage.getItem('Token', (err, data) => {this.state.token = data});
     }
 
-    arrayRecipes = await fetch('https://receitas-dos-leks.herokuapp.com/recipes', {
+    arrayRecipes = fetch('https://receitas-dos-leks.herokuapp.com/recipes', {
         method: "GET",
         headers: {
             'Authorization': 'Bearer ${this.state.token}'
