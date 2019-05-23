@@ -3,9 +3,8 @@ import { AsyncStorage, FlatList, Text } from 'react-native';
 import Icon from 'react-native-fa-icons';
 
 import { Container, TopBar, SearchBar, NewRecipeButton } from './styles';
-import Feed from '../../Components/Feed';
 import Tabs from '../../Components/Tabs';
-import Card from '../../Components/Card';
+import FeedCard from '../../Components/FeedCard';
 
 export default class Home extends Component {
 
@@ -50,7 +49,7 @@ export default class Home extends Component {
             </TopBar>
             <FlatList
                 data={this.arrayRecipes}
-                renderItem={({item}) => <Card recipe={item}/>}
+                renderItem={({item}) => <FeedCard recipe={item} nav={this.props.navigation.navigate}/>}
             />
             <Tabs screen='Home' nav={this.props.navigation.navigate}/>
         </Container>

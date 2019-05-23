@@ -3,6 +3,7 @@ import { Text, Switch, AsyncStorage } from 'react-native';
 
 import Tabs from '../../Components/Tabs';
 import { Container, ConfigCard, ConfigText, LogOutButton, LogOutText } from './styles';
+import ProfileCard from '../../Components/ProfileCard';
 
 export default class Menu extends React.Component {
 
@@ -25,6 +26,7 @@ export default class Menu extends React.Component {
     render(){
         return (
             <Container>
+                <ProfileCard user={{Nome: 'eu'}} nav={this.props.navigation.navigate}/>
                 <ConfigCard>
                     <ConfigText>Dark mode: {this.state.darkMode ? 'on' : 'off'}</ConfigText>
                     <Switch style={{alignSelf: 'center', marginLeft:'auto', marginRight: 10}}
