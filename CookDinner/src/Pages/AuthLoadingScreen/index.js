@@ -10,37 +10,38 @@ export default class AuthLoadingScreen extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {token: '', remindMe: false};
+        this.state = {time: 0, didRequest: false}
+
+        setInterval(() => {this.setState({ time: this.state.time + 1000 })}, 1000)
     }
 
     async validar() {
+
         const tokenAuth = await AsyncStorage.getItem('token');
-        this.setState({token : tokenAuth});
-        const remind = await AsyncStorage.getItem('remindMe');
-        this.setState({remindMe : remind});
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", this.state.token);
+        myHeaders.append("Authorization", tokenAuth);
         const response = await fetch('https://cookdinnerapi.herokuapp.com/recipes', {
             method: "GET",
             headers: myHeaders
         });
-        console.log(this.state.remindMe);
-        console.log(response.status);
 
-        try{
-            this.state.remindMe = await AsyncStorage.getItem('remindMe');
-            if(response.status == 200 && this.state.remindMe){
-                this.props.navigation.navigate("App");
-            }
-        } catch(err){
-            alert(err);
-        } finally {
-            AsyncStorage.setItem('token', 0);
+        if(response.status == 200){
+            this.props.navigation.navigate("App");
+            return;
+        }
+        AsyncStorage.setItem('token', 0);
+        this.props.navigation.navigate('SignIn');   
+    }
+
+    render(){
+        if(this.state.time >= 10000) {
+            alert('Não foi possível conectar ao servidor');
             this.props.navigation.navigate('SignIn');
         }
-    }
-    render(){
-        this.validar();
+        if(!this.state.didRequest){
+            this.setState({didRequest: true });
+            this.validar(this.state.time);
+        }
         return(
             <Container>
                 <Logo />

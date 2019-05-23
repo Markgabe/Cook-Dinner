@@ -45,7 +45,7 @@ export const LoginButtonContainer = styled.View`
 `
 
 export const NoAccountContainer = styled.View`
-    margin-top: 20;
+    margin-top: 62;
     background-color: #AAA;
     width: 100%;
     flex-direction: row;
@@ -60,20 +60,5 @@ export const NoAccountButton = styled.TouchableOpacity`
 export const NoAccountText = styled.Text`
     align-self: center;
     font-size: 20;
-    font-weight: bold;
-`
-
-export const RemindMeContainer = styled.View`
-    flex-direction: row;
-    padding-left: 50;
-    margin-top: 15;
-    margin-right: 30;
-`
-
-export const RemindMeText = styled.Text`
-    align-self: center;
-    font-size: 18;
-    margin-right: 10;
-    margin-left: 20
     font-weight: bold;
 `

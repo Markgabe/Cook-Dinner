@@ -6,7 +6,6 @@ import { Switch } from 'react-native-gesture-handler';
 import Logo from '../../Components/Logo';
 import { Container, Content, TextBox,
         LoginButtonContainer, LoginButtonText, LoginButton,
-        RemindMeContainer, RemindMeText,
         NoAccountContainer, NoAccountText, NoAccountButton } from './styles';
 
 export default class Login extends Component {
@@ -15,15 +14,7 @@ export default class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {username: '', password: '', remindMe: false};
-        this.onControlChange = this.onControlChange.bind(this);
-    }
-
-
-    onControlChange(value) {
-        return this.setState({
-            remindMe: !this.state.remindMe
-        });
+        this.state = {username: '', password: ''};
     }
 
     async validar(user, pass) {
@@ -39,8 +30,6 @@ export default class Login extends Component {
         const token = json['access-token'];
 
         await AsyncStorage.setItem('token', token);
-        console.log(this.state.remindMe);
-        AsyncStorage.setItem('remindMe', this.state.remindMe);
 
         (response.status == 200) ? this.props.navigation.navigate('App') : alert("Usuário ou senha inválidos!");
 
@@ -55,7 +44,7 @@ export default class Login extends Component {
                 <Content>
 
                     <TextBox
-                        placeholder="E-mail"
+                        placeholder="Usuário"
                         onChangeText={(username) => this.setState({username})}
                         value={this.state.username}
                     />
@@ -74,13 +63,6 @@ export default class Login extends Component {
                             <LoginButtonText>Logar</LoginButtonText>
                         </LoginButton>
                     </LoginButtonContainer>
-
-                    <RemindMeContainer>
-                        <RemindMeText>Lembrar-me</RemindMeText>
-                        <Switch value={ this.state.remindMe }
-                                onValueChange={this.onControlChange}
-                        />
-                    </RemindMeContainer>
 
                     <NoAccountContainer>
                         <NoAccountButton

@@ -41,39 +41,25 @@ export default class RecipeRegister extends React.Component {
 
 const cadastrarReceita = async (name, description) => {
 
-  const token = await AsyncStorage.getItem('Access-Token');
-  const tokenType = await AsyncStorage.getItem('Token-Type');
-  const client = await AsyncStorage.getItem('Client');
-  const uid = await AsyncStorage.getItem('Uid');
-
+  const token = await AsyncStorage.getItem('token');
 
   const obj = new Headers(
-    [['Content-Type', 'application/json; charset=utf-8'],
-    ['Accept', 'application/json; charset=utf-8'],
-    ['Access-Token', token],
-    ['Token-Type', tokenType],
-    ['client', client],
-    ['uid', uid]]
+    [['Authorization', 'Bearer '+token]]
   );
 
-  console.log(obj);
-
-  const response = await fetch('https://cookdinnerapi2.herokuapp.com/register_recipe', {
+  const response = await fetch('https://cookdinnerapi.herokuapp.com/recipe', {
     method: "POST",
     headers: obj,
     body: JSON.stringify({
-        title: name,
-        description: description
+        Nome: name,
+        Descricao: description
     })
   });
 
   console.log(response);
 
   await AsyncStorage.multiSet([
-    ['Access-Token', response.headers.map['access-token']],
-    ['Token-Type', response.headers.map['token-type']],
-    ['Client', response.headers.map['client']],
-    ['Uid', response.headers.map['uid']]
+    ['token', response['access-token']]
   ]);
 
 }

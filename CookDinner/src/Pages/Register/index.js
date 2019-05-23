@@ -72,8 +72,10 @@ export default class Register extends Component {
             })
         });
 
-        AsyncStorage.setItem('RemindMe', false);
-        await AsyncStorage.setItem('Token', response.headers.map['access-token']);
+        const json = await response.json();
+        const token = json['access-token'];
+        
+        await AsyncStorage.setItem('token', token);
 
         switch(response.status){
             case 200:
@@ -114,7 +116,7 @@ export default class Register extends Component {
                     />
 
                     <TextBox
-                        placeholder="E-mail"
+                        placeholder="Usuário"
                         onChangeText={(email) => this.setState({email})}
                         value={this.state.email}
                     />
