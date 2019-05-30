@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-
 import { Linking, StatusBar, View } from 'react-native';
-
 import QRCodeScanner from 'react-native-qrcode-scanner';
+
+import Tabs from '../../Components/Tabs';
 
 export default class ScanScreen extends Component {
 
@@ -29,7 +29,7 @@ export default class ScanScreen extends Component {
                 showMarker
                 cameraProps={{ratio:"16:9"}}
                 />
-                <Tabs screen='QRScreen'/>
+                <Tabs screen='QRScreen' nav={this.props.navigation.navigate} />
             </View>
         );
     }

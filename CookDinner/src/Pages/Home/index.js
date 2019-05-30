@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, FlatList, Text } from 'react-native';
+import { AsyncStorage, FlatList } from 'react-native';
 import Icon from 'react-native-fa-icons';
 
 import { Container, TopBar, SearchBar, NewRecipeButton } from './styles';
@@ -61,7 +61,7 @@ export default class Home extends Component {
                 data={this.arrayRecipes}
                 renderItem={({item}) => <FeedCard recipe={item}/>}
             />
-            <Tabs screen='Home' />
+            <Tabs screen='Home' nav={this.props.navigation.navigate} />
         </Container>
     );
   }

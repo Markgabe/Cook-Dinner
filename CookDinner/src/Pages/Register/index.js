@@ -56,13 +56,19 @@ export default class Register extends Component {
             } else {
                 const source = { uri: response.uri };
                 this.setState({ avatarSource: source });
+                this.setState({photo: {
+                    fileName: response.fileName,
+                    path: response.path,
+                    type: response.type,
+                    uri: response.uri,
+                    width: response.width,
+                    height: response.height,
+                  }})
             }
         });
     }
 
     async cadastrar(user, pass, name, image) {
-        const formData = new FormData();
-        formData.append('image', image);
 
         const response = await fetch('https://cookdinnerapi.herokuapp.com/sign_up', {
             method: "POST",
@@ -74,6 +80,20 @@ export default class Register extends Component {
 
         const json = await response.json();
         const token = json['access-token'];
+        console.log(token);
+
+        const form = new FormData();
+        form.append('picture', {uri: this.state.photo.uri,
+            type: this.state.photo.type,
+            name: this.state.photo.fileName,})
+        console.log(form);
+        await fetch('https://cookdinnerapi.herokuapp.com/pic', {
+            method: "POST",
+            body: form,
+            headers: {
+                Authorization: 'Bearer '+token
+            }
+        }).then(r => console.log(r));
         
         await AsyncStorage.setItem('token', token);
 
