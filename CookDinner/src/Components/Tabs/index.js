@@ -1,34 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import Icon from 'react-native-fa-icons';
-import Text from 'react-native';
 
-import {Container, TabButton} from './styles';
+import { Container, TabButton } from './styles';
 
-export default function Tabs({screen, nav}){
-    var homeColor = '#FFF';
-    var notifColor = '#FFF';
-    var menuColor = '#FFF';
-    var qrColor = '#FFF';
+export default class Tabs extends Component {
 
-    if(screen=='Home') homeColor = '#000';
-    else if(screen=='Notifications') notifColor = '#000';
-    else if(screen=='Menu') menuColor = '#000';
-
-    return (
-        <Container>
-            <TabButton onPress={() => nav('Home')}>
-                <Icon name='home' style={{fontSize: 45, color: homeColor}} />
-            </TabButton>
-            <TabButton onPress={() => nav('Notifications')}>
-                <Icon name='bell' style={{fontSize: 38, color: notifColor}} />
-            </TabButton>
-            <TabButton onPress={() => nav('QRScreen')}>
-                <Icon name='qrcode' style={{fontSize:45, color: qrColor}} />
-            </TabButton>
-            <TabButton onPress={() => nav('Menu')}>
-                <Icon name='bars' style={{fontSize: 45, color: menuColor}} />
-            </TabButton>
-        </Container>
-    );
+    constructor(props) {
+        super(props);
+    }
+    
+    render() {
+        return (
+            <Container>
+                <TabButton onPress={() => this.props.navigation.navigate('Home')}>
+                    <Icon name='home' style={{ fontSize: 45, color: this.props.screen == 'Home' ? '#000' : '#EEE' }} />
+                </TabButton>
+                <TabButton onPress={() => this.props.navigation.navigate('Notifications')}>
+                    <Icon name='bell' style={{ fontSize: 38, color: this.props.screen == 'Notifications' ? '#000' : '#EEE' }} />
+                </TabButton>
+                <TabButton onPress={() => this.props.navigation.navigate('QRScreen')}>
+                    <Icon name='qrcode' style={{ fontSize: 45, color: this.props.screen == 'QRScreen' ? '#000' : '#EEE' }} />
+                </TabButton>
+                <TabButton onPress={() => this.props.navigation.navigate('Menu')}>
+                    <Icon name='bars' style={{ fontSize: 45, color: this.props.screen == 'Menu' ? '#000' : '#EEE' }} />
+                </TabButton>
+            </Container>
+        );
+    }
 };

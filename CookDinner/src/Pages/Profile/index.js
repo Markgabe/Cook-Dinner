@@ -1,35 +1,52 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Text } from 'react-native';
+import { AsyncStorage, Text, FlatList } from 'react-native';
 
-export default class Profile extends Component{
+import FeedCard from '../../Components/FeedCard';
+
+export default class Profile extends Component {
 
     static navigationOptions = { header: null };
-    
-    async requestUser(){
+
+    async requestUser() {
         var token = await AsyncStorage.getItem('token');
         var userID = await AsyncStorage.getItem('openendProfile');
-        var response = await fetch('https://cookdinnerapi.herokuapp.com/loremipsum', {
+        var response = await fetch(`https://cookdinnerapi.herokuapp.com/find/${userID}`, {
             method: 'GET',
-            headers:{
+            headers: {
                 Authorization: `Bearer ${token}`
-            },
-            body:{
-
             }
         });
-        var user = "{'Nome': 'Carlinhos'}";
-        return JSON.parse(user);
+        return JSON.parse(response.user);
     }
-    
-    constructor(props){
+
+    async requestUserRecipes() {
+        var token = await AsyncStorage.getItem('token');
+        var userID = await AsyncStorage.getItem('openendProfile');
+        var response = await fetch(`https://cookdinnerapi.herokuapp.com/recipes/${userID}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return JSON.parse(response.recipes);
+    }
+
+    constructor(props) {
         super(props);
         this.user = this.requestUser();
+        this.arrayRecipes = this.requestUserRecipes();
     }
 
-    render(){
-
-        return(
-            <Text>{this.user.Nome}</Text>
+    render() {
+        return (
+            <View>
+                <Text>{this.user.Nome}</Text>
+                <Image source={{uri: `https://cookdinnerapi.herokuapp.com/getpic/${user.ID}`}} />
+                <FlatList
+                    data={this.arrayRecipes}
+                    renderItem={({ item }) => <FeedCard recipe={item} />}
+                />
+            </View>
         );
     }
 

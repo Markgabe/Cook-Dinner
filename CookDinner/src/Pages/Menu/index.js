@@ -36,13 +36,14 @@ export default class Menu extends React.Component {
                 </ConfigCard>
 
                 <LogOutButton onPress={() => {
-                    AsyncStorage.setItem('token', 0);
+                    AsyncStorage.setItem('token', '0');
+                    this.props.navigation.
                     this.props.navigation.navigate('SignIn');
                 }}> 
                     <LogOutText>Sair</LogOutText>
                 </LogOutButton>
 
-                <Tabs screen='Menu' nav={this.props.navigation.navigate}/>
+                <Tabs screen='Menu' />
             </Container>
       );
   }

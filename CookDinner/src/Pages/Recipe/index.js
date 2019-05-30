@@ -44,7 +44,7 @@ export default class Recipe extends Component{
                         {this.recipe.Nome}
                     </Title>
                 </Content>
-                <ProfileCard user={this.user} nav={this.props.navigation.navigate} />
+                <ProfileCard user={this.user}/>
                 <DescriptionBox>
                     {this.recipe.Descrição}
                 </DescriptionBox>

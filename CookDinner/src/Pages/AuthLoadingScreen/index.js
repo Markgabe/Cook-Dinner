@@ -18,25 +18,31 @@ export default class AuthLoadingScreen extends Component {
     async validar() {
 
         const tokenAuth = await AsyncStorage.getItem('token');
+        if (tokenAuth == '0') {
+            this.props.navigation.navigate('SignIn');
+            return;
+        }
+
         var myHeaders = new Headers();
         myHeaders.append("Authorization", tokenAuth);
         const response = await fetch('https://cookdinnerapi.herokuapp.com/cred', {
             method: "GET",
             headers: myHeaders
         });
-        if(this.state.time >= 7000) return;
+
+        if(this.state.time >= 15000) return;
 
         if(response.status == 200){
             this.props.navigation.navigate("App");
             return;
         }
 
-        AsyncStorage.setItem('token', 0);
+        AsyncStorage.setItem('token', '0');
         this.props.navigation.navigate('SignIn');   
     }
 
     render(){
-        if(this.state.time >= 7000) {
+        if(this.state.time >= 15000) {
             alert('Não foi possível conectar ao servidor');
             this.props.navigation.navigate('SignIn');
         }

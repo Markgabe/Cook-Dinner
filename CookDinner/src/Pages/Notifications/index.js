@@ -16,7 +16,7 @@ export default class Notifications extends Component {
         return (
             <MainView>
                 <Text style={{fontSize: 50}}>WIP My Dudes</Text>
-                <Tabs screen='Notifications' nav={this.props.navigation.navigate}/>
+                <Tabs screen='Notifications' />
             </MainView>
         );
     }

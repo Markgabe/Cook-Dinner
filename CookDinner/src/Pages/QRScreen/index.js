@@ -29,6 +29,7 @@ export default class ScanScreen extends Component {
                 showMarker
                 cameraProps={{ratio:"16:9"}}
                 />
+                <Tabs screen='QRScreen'/>
             </View>
         );
     }
