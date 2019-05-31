@@ -14,7 +14,8 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.oblador.vectoricons.VectorIconsPackage;
 import java.util.Arrays;
-import java.util.List;
+import java.util.List;
+
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -33,8 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
             new PickerPackage(),
             new ImagePickerPackage(),
             new RNGestureHandlerPackage(),
-            new VectorIconsPackage(),
-            new RNFSPackage()
+            new VectorIconsPackage()
       );
     }
 

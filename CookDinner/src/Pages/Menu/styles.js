@@ -36,3 +36,17 @@ export const LogOutText = styled.Text`
     color: red;
     font-size: 20;
 `
+
+export const AvatarImage = styled.Image`
+    width: 150;
+    height: 150;
+    border-radius: 75;
+`
+
+export const AvatarContainer = styled.View`
+    margin-top: 30;
+    margin-bottom: 50;
+`
+
+export const ChooseFileButton = styled.TouchableOpacity`
+`

@@ -4,9 +4,11 @@ import { sha256 } from 'react-native-sha256';
 import { Switch } from 'react-native-gesture-handler';
 
 import Logo from '../../Components/Logo';
-import { Container, Content, TextBox,
-        LoginButtonContainer, LoginButtonText, LoginButton,
-        NoAccountContainer, NoAccountText, NoAccountButton } from './styles';
+import {
+    Container, Content, TextBox,
+    LoginButtonContainer, LoginButtonText, LoginButton,
+    NoAccountContainer, NoAccountText, NoAccountButton
+} from './styles';
 
 export default class Login extends Component {
 
@@ -14,7 +16,7 @@ export default class Login extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {username: '', password: ''};
+        this.state = { username: '', password: '' };
     }
 
     async validar(user, pass) {
@@ -33,27 +35,27 @@ export default class Login extends Component {
 
         (response.status == 200) ? this.props.navigation.navigate('App') : alert("Usuário ou senha inválidos!");
 
-        }
+    }
 
     render() {
         return (
-            <Container behavior='height'>
+            <Container>
 
-                <Logo/>
+                <Logo />
 
-                <Content>
+                <Content behavior='padding' enabled>
 
                     <TextBox
                         placeholder="Usuário"
-                        onChangeText={(username) => this.setState({username})}
+                        onChangeText={(username) => this.setState({ username })}
                         value={this.state.username}
                     />
 
                     <TextBox
                         placeholder="Senha"
-                        onChangeText={(password) => this.setState({password})}
+                        onChangeText={(password) => this.setState({ password })}
                         value={this.state.password}
-                        secureTextEntry = {true}
+                        secureTextEntry={true}
                     />
 
                     <LoginButtonContainer>
@@ -64,17 +66,16 @@ export default class Login extends Component {
                         </LoginButton>
                     </LoginButtonContainer>
 
-                    <NoAccountContainer>
-                        <NoAccountButton
-                            onPress={() => this.props.navigation.navigate("Register")}>
-                            <NoAccountText>Não possui uma conta?</NoAccountText>
-                        </NoAccountButton>
-                    </NoAccountContainer>
-
                 </Content>
-
+                <NoAccountContainer>
+                    <NoAccountButton
+                        onPress={() => this.props.navigation.navigate("Register")}>
+                        <NoAccountText>Não possui uma conta?</NoAccountText>
+                    </NoAccountButton>
+                </NoAccountContainer>
             </Container>
 
-        );}
-
+        );
     }
+
+}

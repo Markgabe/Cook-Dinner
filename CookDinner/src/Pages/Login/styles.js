@@ -1,14 +1,14 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.KeyboardAvoidingView`
-    flex: 1;
-    background-color: #888;
+export const Container = styled.View`
+    flex: 1.7;
 `
 
-export const Content = styled.View`
+export const Content = styled.KeyboardAvoidingView`
     align-items: center;
-    flex: 1;
     padding-top: 50;
+    padding-bottom: 50;
+    background-color: #888;
 `
 
 export const TextBox = styled.TextInput`
@@ -41,20 +41,21 @@ export const LoginButton = styled.TouchableOpacity`
 
 export const LoginButtonContainer = styled.View`
     margin-top: 30;
+    margin-bottom: 30;
     align-self: stretch;
 `
 
 export const NoAccountContainer = styled.View`
-    margin-top: 62;
+    margin-top: auto;
+    padding-bottom: 30;
+    padding-top: 30;
     background-color: #AAA;
     width: 100%;
-    flex-direction: row;
     justify-content: center;
     height: 70;
 `
 
 export const NoAccountButton = styled.TouchableOpacity`
-    margin-top: 20;
 `
 
 export const NoAccountText = styled.Text`
