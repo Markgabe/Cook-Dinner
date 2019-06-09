@@ -1,7 +1,10 @@
+import { Animated } from 'react-native';
+
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
-    flex: 1;
+export const Container = styled(Animated.View)`
+    width: 480;
+    height: 100%;
 `
 
 export const ConfigText = styled.Text`

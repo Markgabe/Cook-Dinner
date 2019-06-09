@@ -1,21 +1,54 @@
 import React, { Component } from 'react';
-import { AsyncStorage, FlatList } from 'react-native';
-import Icon from 'react-native-fa-icons';
+import { Animated, AsyncStorage } from 'react-native';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
 
-import { Container, TopBar, SearchBar, NewRecipeButton } from './styles';
+import Feed from '../../Components/Feed';
+import QRScreen from '../../Components/QRScreen';
+import Notifications from '../../Components/Notifications';
+import Menu from '../../Components/Menu';
 import Tabs from '../../Components/Tabs';
-import FeedCard from '../../Components/FeedCard';
+import { Container } from './styles';
 
-export default class Home extends Component {
+export default class Home extends Component{
 
     static navigationOptions = { header: null };
 
-    constructor(props) {
+    constructor(props){
         super(props);
-        this.state = { search: ''};
+        this.offset = 0;
+        this.state = {
+            screen: 0,
+            darkMode: false,
+            search: '',
+        }
         this.arrayRecipes = [{Id: 0, Nome: "Miojo", Descrição: "leitinho poo", IdUser: 5}];
         this.request();
         this.token = AsyncStorage.getItem('token');
+
+        AsyncStorage.getItem('darkMode', (err, data) => {
+            this.setState({
+                darkMode: Boolean(data),
+            });
+        });
+        this.modalVisible = false;
+
+        this.translateX = new Animated.Value(0);
+        this.animatedEvent = Animated.event(
+            [
+                {
+                    nativeEvent:{
+                        translationX: this.translateX.interpolate({
+                            inputRange: [0, 480*4],
+                            outputRange: [0, 480*4],
+                            extrapolate: 'clamp'
+                        }),
+                    }
+                }
+            ],
+            { useNativeDriver: true},
+        );
+
+        this.goToScreen = this.goToScreen.bind(this);
     }
 
     async request(){
@@ -42,27 +75,84 @@ export default class Home extends Component {
     
     }
 
-    render() {
+    setDarkMode(value){
+        this.setState({
+            darkMode: value
+        });
+    }
+
+    setModalVisible(bool){
+        this.modalVisible = bool;
+    }
+
+    goToScreen(screen){
+        this.setState({
+            screen: screen
+        });
+
+        Animated.timing(this.translateX, {
+            toValue: (this.state.screen+1)*480,
+            duration: 500,
+            useNativeDriver: true
+        }).start(() => {
+            this.offset = 0;
+            this.translateX.setOffset(this.offset);
+            this.translateX.setValue(0);
+        });
+    }
+
+    onHandlerStateChanged(event){
+        if(event.nativeEvent.oldState === State.ACTIVE){
+            const { translationX } = event.nativeEvent; 
+            this.offset += translationX;
+            
+
+            if(translationX <= -240 && this.state.screen!=0){
+                this.setState({
+                    screen: this.state.screen-1,
+                });
+            } else if(translationX >= 240 && this.state.screen!=3){
+                this.setState({
+                    screen: this.state.screen+1,
+                });
+            };
+
+            this.goToScreen();
+            
+        }
+
+    }
+
+    render(){
         return (
+            <>
+                <PanGestureHandler
+                    onGestureEvent={this.animatedEvent}
+                    onHandlerStateChange={this.onHandlerStateChanged}
+                >
+                    <Container style={{
+                        transform: [{
+                            translateX: this.translateX.interpolate({
+                                inputRange: [0, 480*4],
+                                outputRange: [0, 480*4],
+                                extrapolate: 'clamp'
+                            }),
+                        }]
+                    }}>
+                        <Feed 
+                            searchValue={this.state.search}
+                            arrayRecipes={this.arrayRecipes}
+                            nav={this.props.navigation.navigate}
+                        />
+                        <QRScreen />
+                        <Notifications />
+                        
+                    </Container>
 
-        <Container>
-            <TopBar>
-                <SearchBar
-                    placeholder='Pesquisar'
-                    onChangeText={(search) => requestSearch(search)}
-                    value={this.state.search}
-                />
-                <NewRecipeButton onPress={() => this.props.navigation.navigate('NewRecipe')}>
-                    <Icon name='plus-circle' style={{fontSize:40, color:'#FFF'}} />
-                </NewRecipeButton>
-            </TopBar>
+                </PanGestureHandler>
+                <Tabs screen={this.state.screen} goToScreen={this.goToScreen} />
+            </>
+        );
+    }
 
-            <FlatList
-                data={this.arrayRecipes}
-                renderItem={({item}) => <FeedCard recipe={item}/>}
-            />
-            <Tabs screen='Home' nav={this.props.navigation.navigate} />
-        </Container>
-    );
-  }
 }
