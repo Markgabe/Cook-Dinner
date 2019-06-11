@@ -11,18 +11,22 @@ export default class FeedCard extends Component {
 	}
 
 	openRecipe(){
-		AsyncStorage.setItem('openedRecipe', JSON.stringify(this.props.recipe))
-		.then(this.props.navigation.navigate('Recipe'));
+		AsyncStorage.setItem('openedRecipe', JSON.stringify(this.props.recipe)).then(() => {
+			this.props.navigation.navigate('Recipe')
+		});
 	}
 
+	likeRecipe(){
+		alert('é like like like');
+	}
 
 	render() {
 		return (
 			<Container onPress={() => {this.openRecipe}}>
-				<Picture source={require('../../Assets/comida.png')} />
-				<Title>{this.props.recipe.Nome}</Title>
+				<Picture source={this.props.recipe['has_picture'] ? { uri: `https://cookdinnerapi.herokuapp.com/get_recipe_pic/${this.props.recipe.id}`} : require('../../Assets/food_default.png')} />
+				<Title>{this.props.recipe.name}</Title>
 
-				<FavButton onPress={() => alert('é like like like')}>
+				<FavButton onPress={() => this.likeRecipe()}>
 					<Icon name='heart' style={{ fontSize: 30, color: '#888' }} />
 				</FavButton>
 

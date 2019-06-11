@@ -1,57 +1,84 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Switch, AsyncStorage } from 'react-native';
 
-import PicPopUp from '../PicPopUp';
-import { Container, ConfigCard, ConfigText, LogOutButton, LogOutText,
-         AvatarContainer, AvatarImage, ChooseFileButton } from './styles';
+//import PicPopUp from '../PicPopUp';
+import {
+	Container,
+	ConfigCard,
+	ConfigText,
+	LogOutButton,
+	LogOutText,
+	AvatarContainer,
+	AvatarImage,
+	ChooseFileButton
+} from './styles';
+import api from '../../Services/api';
 
-export default function Menu({modalVisible, setModalVisible, darkMode, setDarkMode, nav}) {
+export default class Menu extends Component {
+	static navigationsOptions = {
+		header: null
+	};
 
-    function onControlChange(value) {
-        AsyncStorage.setItem('darkMode', String(!darkMode));
-        setDarkMode(!darkMode);
-    }
+	state = {
+		modalVisible: false
+	};
 
-    async function getPic(){
-        let token = await AsyncStorage.getItem('token');
+	constructor(props) {
+		super(props);
+		this.onControlChange = this.onControlChange.bind(this);
+	}
 
-        let response = await fetch('https://cookdinnerapi.herokuapp.com/cred', {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        return `https://cookdinnerapi.herokuapp.com/getpic/${response.Id}`;
-    }
+	componentDidMount() {
+		this.getPic();
+	}
 
-    return (
-    <Container>
-        <AvatarContainer>
-            <ChooseFileButton
-                onPress = {setModalVisible(true)}>
-                <AvatarImage source={{ uri: getPic()}} />
-            </ChooseFileButton>
-        </AvatarContainer>
+	setModalVisible(bool) {
+		this.setState({
+			modalVisible: bool
+		});
+	}
 
-        <ConfigCard>
-            <ConfigText>Dark mode: {darkMode ? 'on' : 'off'}</ConfigText>
-            <Switch style={{alignSelf: 'center', marginLeft:'auto', marginRight: 10}}
-                    value={darkMode}
-                    onValueChange={onControlChange}
-            />
-        </ConfigCard>
+	onControlChange(value) {
+		this.props.setDarkMode(!this.props.getDarkMode());
+	}
 
-        <PicPopUp 
-            modalVisible={modalVisible} 
-            setModalVisible={setModalVisible}        
-        />
-        
-        <LogOutButton onPress={() => {
-            AsyncStorage.setItem('token', '0');
-            nav('SignIn');
-        }}> 
-            <LogOutText>Sair</LogOutText>
-        </LogOutButton>
-    </Container>
-    );
+	async getPic() {
+		api.get('/cred').then(response => {
+			this.setState({
+				uri: `https://cookdinnerapi.herokuapp.com/getpic/${response.Id}`
+			});
+		});
+	}
+
+	render() {
+		return (
+			<Container>
+				<AvatarContainer>
+					<ChooseFileButton onPress={() => this.setModalVisible(true)}>
+						<AvatarImage source={{ uri: this.state.uri }} />
+					</ChooseFileButton>
+				</AvatarContainer>
+
+				<ConfigCard>
+					<ConfigText>
+						Dark mode: {this.props.getDarkMode() ? 'on' : 'off'}
+					</ConfigText>
+					<Switch
+						style={{ alignSelf: 'center', marginLeft: 'auto', marginRight: 10 }}
+						value={this.props.getDarkMode()}
+						onValueChange={this.onControlChange}
+					/>
+				</ConfigCard>
+
+				<LogOutButton
+					onPress={() => {
+						AsyncStorage.setItem('token', '0');
+						this.props.navigation.navigate('SignIn');
+					}}
+				>
+					<LogOutText>Sair</LogOutText>
+				</LogOutButton>
+			</Container>
+		);
+	}
 }

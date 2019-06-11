@@ -1,158 +1,122 @@
 import React, { Component } from 'react';
-import { Animated, AsyncStorage } from 'react-native';
-import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import { AsyncStorage, FlatList } from 'react-native';
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 import Feed from '../../Components/Feed';
 import QRScreen from '../../Components/QRScreen';
 import Notifications from '../../Components/Notifications';
 import Menu from '../../Components/Menu';
 import Tabs from '../../Components/Tabs';
-import { Container } from './styles';
+import api from '../../Services/api';
 
-export default class Home extends Component{
+export default class Home extends Component {
+	static navigationOptions = {
+		header: null
+	};
 
-    static navigationOptions = { header: null };
+	state = {
+		screen: 0,
+		darkMode: false,
+		search: '',
+		arrayRecipes: []
+	};
 
-    constructor(props){
-        super(props);
-        this.offset = 0;
-        this.state = {
-            screen: 0,
-            darkMode: false,
-            search: '',
-        }
-        this.arrayRecipes = [{Id: 0, Nome: "Miojo", Descrição: "leitinho poo", IdUser: 5}];
-        this.request();
-        this.token = AsyncStorage.getItem('token');
+	constructor(props) {
+		super(props);
+		this.goToScreen = this.goToScreen.bind(this);
+		this.getDarkMode = this.getDarkMode.bind(this);
+		this.setDarkMode = this.setDarkMode.bind(this);
+	}
 
-        AsyncStorage.getItem('darkMode', (err, data) => {
-            this.setState({
-                darkMode: Boolean(data),
-            });
-        });
-        this.modalVisible = false;
+	componentDidMount() {
+		this.getRecipes();
+		this.getDarkMode();
+	}
 
-        this.translateX = new Animated.Value(0);
-        this.animatedEvent = Animated.event(
-            [
-                {
-                    nativeEvent:{
-                        translationX: this.translateX.interpolate({
-                            inputRange: [0, 480*4],
-                            outputRange: [0, 480*4],
-                            extrapolate: 'clamp'
-                        }),
-                    }
-                }
-            ],
-            { useNativeDriver: true},
-        );
+	async getDarkMode() {
+		AsyncStorage.getItem('darkMode').then((err, data) => {
+			if (!err) {
+				this.setState({
+					darkMode: Boolean(data)
+				});
+			}
+		});
+	}
 
-        this.goToScreen = this.goToScreen.bind(this);
-    }
+	async getRecipes() {
+		api.get('/recipes').then(response => {
+			this.setState({ recipes: response.data });
+		});
+	}
 
-    async request(){
-        const response = await fetch('https://cookdinnerapi.herokuapp.com/recipes', {
-            method: "GET",
-            headers: {
-                'Authorization': `Bearer ${this.token}`
-            }
-        }).then(x => x.json()).then(x=>{
-            for (i in x){
-                this.arrayRecipes.push(x[i])
-            }
-        });
-    }
+	async getSearch(search) {
+		api.get('/search/' + search).then(response => {
+			this.setState({
+				arrayRecipes: [{ Nome: 'piroca', Descrição: 'pesquisei' }]
+			});
+		});
+	}
 
-    async requestSearch(search){
-        this.setState({search: search})
-        const response = await fetch(`https://cookdinnerapi.herokuapp.com/search/${search}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${this.token}`
-            }
-        }).then(this.arrayRecipes = [{Nome: 'piroca', Descrição: 'pesquisei'}]);
-    
-    }
+	getDarkMode() {
+		return this.state.darkMode;
+	}
 
-    setDarkMode(value){
-        this.setState({
-            darkMode: value
-        });
-    }
+	setDarkMode(value) {
+		this.setState({
+			darkMode: value
+		});
+		AsyncStorage.setItem('darkMode', String(value));
+	}
 
-    setModalVisible(bool){
-        this.modalVisible = bool;
-    }
+	goToScreen(screen) {
+		this.setState({
+			screen: screen
+		});
+		this.scroll.scrollToIndex({
+			index: screen,
+			animated: true
+		});
+	}
 
-    goToScreen(screen){
-        this.setState({
-            screen: screen
-        });
-
-        Animated.timing(this.translateX, {
-            toValue: (this.state.screen+1)*480,
-            duration: 500,
-            useNativeDriver: true
-        }).start(() => {
-            this.offset = 0;
-            this.translateX.setOffset(this.offset);
-            this.translateX.setValue(0);
-        });
-    }
-
-    onHandlerStateChanged(event){
-        if(event.nativeEvent.oldState === State.ACTIVE){
-            const { translationX } = event.nativeEvent; 
-            this.offset += translationX;
-            
-
-            if(translationX <= -240 && this.state.screen!=0){
-                this.setState({
-                    screen: this.state.screen-1,
-                });
-            } else if(translationX >= 240 && this.state.screen!=3){
-                this.setState({
-                    screen: this.state.screen+1,
-                });
-            };
-
-            this.goToScreen();
-            
-        }
-
-    }
-
-    render(){
-        return (
-            <>
-                <PanGestureHandler
-                    onGestureEvent={this.animatedEvent}
-                    onHandlerStateChange={this.onHandlerStateChanged}
-                >
-                    <Container style={{
-                        transform: [{
-                            translateX: this.translateX.interpolate({
-                                inputRange: [0, 480*4],
-                                outputRange: [0, 480*4],
-                                extrapolate: 'clamp'
-                            }),
-                        }]
-                    }}>
-                        <Feed 
-                            searchValue={this.state.search}
-                            arrayRecipes={this.arrayRecipes}
-                            nav={this.props.navigation.navigate}
-                        />
-                        <QRScreen />
-                        <Notifications />
-                        
-                    </Container>
-
-                </PanGestureHandler>
-                <Tabs screen={this.state.screen} goToScreen={this.goToScreen} />
-            </>
-        );
-    }
-
+	render() {
+		return (
+			<>
+				<>
+					<FlatList
+						style={{
+							width: wp(100)
+						}}
+						showsHorizontalScrollIndicator={false}
+						horizontal={true}
+						directionalLockEnabled={true}
+						pagingEnabled={true}
+						onMomentumScrollEnd={event => {
+							this.setState({
+								screen: Math.round(event.nativeEvent.contentOffset.x / wp(100))
+							});
+						}}
+						ref={input => {
+							this.scroll = input;
+						}}
+						data={[
+							<Feed
+								searchValue={this.state.search}
+								arrayRecipes={this.arrayRecipes}
+								requestSearch={this.getSearch}
+								nav={this.props.navigation.navigate}
+							/>,
+							<Notifications />,
+							<QRScreen />,
+							<Menu
+								getDarkMode={this.getDarkMode}
+								setDarkMode={this.setDarkMode}
+							/>
+						]}
+						renderItem={({ item }) => item}
+					/>
+				</>
+				<Tabs screen={this.state.screen} goToScreen={this.goToScreen} />
+			</>
+		);
+	}
 }

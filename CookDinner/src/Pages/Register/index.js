@@ -1,117 +1,153 @@
 import React, { Component } from 'react';
 import { AsyncStorage } from 'react-native';
-import ImagePicker from 'react-native-image-picker';
-import ImageCropPicker from 'react-native-image-crop-picker';
-import Icon from 'react-native-fa-icons';
 import { sha256 } from 'react-native-sha256';
 
 import Logo from '../../Components/Logo';
+import api from '../../Services/api';
 import {
-    Container, Content, TextBox, AvatarImage,
-    RegisterButton, RegisterButtonText, RegisterButtonContainer,
-    HasAccountText, HasAccountButton, HasAccountContainer,
-    IconButton, ChooseFileButton, AvatarContainer
+	Container,
+	Content,
+	TextBox,
+	RegisterButton,
+	RegisterButtonText,
+	RegisterButtonContainer,
+	HasAccountText,
+	HasAccountButton,
+	HasAccountContainer,
+	Indicator
 } from './styles';
 
 export default class Register extends Component {
+	static navigationOptions = {
+		header: null
+	};
 
-    static navigationOptions = { header: null };
+	state = {
+		username: '',
+		password: '',
+		name: '',
+		loading: false
+	};
 
-    constructor(props) {
-        super(props);
-        this.state = { email: '', password: '', name: '', avatarSource: require('../../Assets/profile.png') };
-    }
+	constructor(props) {
+		super(props);
+	}
 
-    async cadastrar(user, pass, name, image) {
+	async cadastrar() {
+		this.setState({
+			loading: true
+		});
+		api
+			.post('/sign_up', {
+				username: this.state.username,
+				password: String(sha256(this.state.password)),
+				name: this.state.name
+			})
+			.then(response => {
+				this.setState({
+					loading: false
+				});
+				AsyncStorage.setItem('token', response.data['access-token']);
+				switch (response.status) {
+					case 200:
+						this.props.navigation.navigate('App');
+						break;
+					case 400:
+						alert('Preencha todos os campos para criar uma conta');
+						break;
+					case 401:
+						alert('Login ou senha inválidos');
+						break;
+					default:
+						alert('erro desconhecido, tente novamente mais tarde');
+						break;
+				}
+			});
+	}
 
-        const response = await fetch('https://cookdinnerapi.herokuapp.com/sign_up', {
-            method: "POST",
-            body: JSON.stringify({
-                email: user,
-                senha: String(sha256(pass))
-            })
-        });
+	render() {
+		return (
+			<Container
+				style={{
+					opacity: this.state.loading ? 0.5 : 1
+				}}
+				pointerEvents={this.state.loading ? 'none' : 'auto'}
+			>
+				<Indicator
+					animating={this.state.loading}
+					size={this.state.loading ? 64 : 0}
+					color="#4f5968"
+				/>
 
-        const json = await response.json();
-        const token = json['access-token'];
+				<Logo />
 
-        await AsyncStorage.setItem('token', token);
+				<Content behavior="padding" enabled>
+					<TextBox
+						placeholder="Nome"
+						onChangeText={name => this.setState({ name })}
+						value={this.state.name}
+						returnKeyType="next"
+						autoCapitalize="none"
+						autoCorrect={false}
+						onSubmitEditing={() => {
+							this.secondTextInput.focus();
+						}}
+						blurOnSubmit={false}
+					/>
 
-        switch (response.status) {
-            case 200:
-                this.props.navigation.navigate('App');
-                const form = new FormData();
-                form.append('picture',
-                    {
-                        uri: '../../Assets/profile.png',
-                        type: 'image/png',
-                        name: 'profile.png'
-                    });
-                await fetch('https://cookdinnerapi.herokuapp.com/pic', {
-                    method: "POST",
-                    body: form,
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });        
-            break;
-            case 400:
-                alert('Preencha todos os campos para criar uma conta');
-            break;
-            case 401:
-                alert('Login ou senha inválidos');
-            break;
-            default:
-                alert('erro desconhecido, tente novamente mais tarde');
-            break;
-        }
-    }
+					<TextBox
+						placeholder="Usuário"
+						onChangeText={username => this.setState({ username })}
+						value={this.state.username}
+						ref={input => {
+							this.secondTextInput = input;
+						}}
+						onSubmitEditing={() => {
+							this.thirdTextInput.focus();
+						}}
+						returnKeyType="next"
+						autoCapitalize="none"
+						autoCorrect={false}
+						blurOnSubmit={false}
+					/>
 
-render() {
-    return (
-        <Container>
+					<TextBox
+						placeholder="Senha"
+						onChangeText={password => this.setState({ password })}
+						value={this.state.password}
+						secureTextEntry={true}
+						returnKeyType="send"
+						autoCapitalize="none"
+						autoCorrect={false}
+						ref={input => {
+							this.thirdTextInput = input;
+						}}
+						onSubmitEditing={() => {
+							this.cadastrar();
+						}}
+					/>
 
-            <Logo />
+					<RegisterButtonContainer>
+						<RegisterButton
+							underlayColor="#222"
+							onPress={() => {
+								Keyboard.dismiss();
+								this.cadastrar();
+							}}
+						>
+							<RegisterButtonText>Enviar</RegisterButtonText>
+						</RegisterButton>
+					</RegisterButtonContainer>
+				</Content>
 
-            <Content behavior='padding' enabled>
-                <TextBox
-                    placeholder="Nome"
-                    onChangeText={(name) => this.setState({ name })}
-                    value={this.state.name}
-                />
-
-                <TextBox
-                    placeholder="Usuário"
-                    onChangeText={(email) => this.setState({ email })}
-                    value={this.state.email}
-                />
-
-                <TextBox
-                    placeholder="Senha"
-                    onChangeText={(password) => this.setState({ password })}
-                    value={this.state.password}
-                    secureTextEntry={true}
-                />
-
-                <RegisterButtonContainer>
-                    <RegisterButton
-                        underlayColor='#222'
-                        onPress={() => { this.cadastrar(this.state.email, this.state.password, this.state.name, this.state.avatarSource) }}
-                    >
-                        <RegisterButtonText>Enviar</RegisterButtonText>
-                    </RegisterButton>
-                </RegisterButtonContainer>
-            </Content>
-
-            <HasAccountContainer>
-                <HasAccountButton onPress={() => this.props.navigation.navigate('Login')}>
-                    <HasAccountText>Já possui uma conta?</HasAccountText>
-                </HasAccountButton>
-            </HasAccountContainer>
-
-        </Container>
-
-    );
-}
-
+				<HasAccountContainer>
+					<HasAccountButton
+						onPress={() => this.props.navigation.navigate('Login')}
+					>
+						<HasAccountText>Já possui uma conta?</HasAccountText>
+					</HasAccountButton>
+				</HasAccountContainer>
+			</Container>
+		);
+	}
 }

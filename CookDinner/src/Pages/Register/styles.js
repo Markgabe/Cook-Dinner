@@ -2,6 +2,8 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
     flex: 1.7;
+	background-color: #000;
+	justify-content: center;
 `
 
 export const Content = styled.KeyboardAvoidingView`
@@ -62,9 +64,8 @@ export const RegisterButtonText = styled.Text`
     color: #FFF;
 `
 
-export const ChooseFileButton = styled.TouchableOpacity`
-`
-
-export const IconButton = styled.TouchableOpacity`
-    align-self: flex-end;
+export const Indicator = styled.ActivityIndicator`
+    align-self: center;
+	z-index: 2;
+	position: absolute;
 `

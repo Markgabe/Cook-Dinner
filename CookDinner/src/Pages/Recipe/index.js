@@ -3,50 +3,67 @@ import { AsyncStorage } from 'react-native';
 
 import { Container, Picture, Title, DescriptionBox, Content } from './styles';
 import ProfileCard from '../../Components/ProfileCard';
+import api from '../../Services/api';
 
 export default class Recipe extends Component{
 
-    static navigationOptions = { header: null };
-    
-    async requestUser(){
-        var token = await AsyncStorage.getItem('token');
-        var response = await fetch('https://cookdinnerapi.herokuapp.com/loremipsum', {
-            method:'GET',
-            headers:{
-                'Authorization': `Bearer ${token}`
-            },
-            body:{
+    static navigationOptions = { 
+		header: null
+	}
 
-            }
-        })
-        var user = {Nome: 'Carlos'};
-        return user;
+	state = {
+		user: {
+			name: '',
+			created_at: '',
+			recipes: []
+		},
+		recipe: {
+			name: '',
+			description: '',
+			portion: '',
+			time: 0,
+		}
+	}
+    
+    async getUser(){
+		api.get('/find_user/'+user.id).then((response) => {
+			this.setState({
+				user: response.data
+			});
+		});
     }
 
     async getRecipe(){
-        var recipe = await AsyncStorage.getItem('openedRecipe');
-        return JSON.parse(recipe);
+        AsyncStorage.getItem('openedRecipe').then((response) => {
+			this.setState({
+				recipe: response.data
+			});
+		});
     }
 
     constructor(props){
         super(props);
-        this.user = this.requestUser();
-        this.recipe = this.getRecipe();
-    }
+        
+	}
+	
+	componentDidMount(){
+		this.getUser();
+        this.getRecipe();
+	}
 
     render(){
         
         return(
             <Container>
                 <Content>
-                    <Picture source={require('../../Assets/comida.png')} />
+                    <Picture source={this.state.recipe['has_picture'] ? `https://cookdinnerapi.herokuapp.com/get_recipe_pic/${this.state.recipe.id}` : require('../../Assets/food_default.png')} />
                     <Title>
-                        {this.recipe.Nome}
+                        {this.state.recipe.name}
                     </Title>
                 </Content>
-                <ProfileCard user={this.user}/>
+                <ProfileCard user={this.state.user}/>
                 <DescriptionBox>
-                    {this.recipe.Descrição}
+                    {this.state.recipe.description}
                 </DescriptionBox>
             </Container>
         );

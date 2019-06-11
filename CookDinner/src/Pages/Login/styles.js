@@ -1,7 +1,9 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-    flex: 1.7;
+	background-color: #000;
+	flex: 1.5;
+	justify-content: center;
 `
 
 export const Content = styled.KeyboardAvoidingView`
@@ -62,4 +64,10 @@ export const NoAccountText = styled.Text`
     align-self: center;
     font-size: 20;
     font-weight: bold;
+`
+
+export const Indicator = styled.ActivityIndicator`
+    align-self: center;
+	z-index: 2;
+	position: absolute;
 `

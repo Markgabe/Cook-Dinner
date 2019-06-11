@@ -2,48 +2,51 @@ import React, { Component } from 'react';
 import { AsyncStorage, Text, FlatList } from 'react-native';
 
 import FeedCard from '../../Components/FeedCard';
+import api from '../../Services/api';
 
 export default class Profile extends Component {
 
-    static navigationOptions = { header: null };
+    static navigationOptions = {
+		header: null 
+	};
 
-    async requestUser() {
-        var token = await AsyncStorage.getItem('token');
-        var userID = await AsyncStorage.getItem('openendProfile');
-        var response = await fetch(`https://cookdinnerapi.herokuapp.com/find/${userID}`, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        return JSON.parse(response.user);
-    }
+	state = {
+		userId: 0,
+		user: {
+			name: '',
+			created_at: '',
+			recipes: []
+		}
+	}
 
-    async requestUserRecipes() {
-        var token = await AsyncStorage.getItem('token');
-        var userID = await AsyncStorage.getItem('openendProfile');
-        var response = await fetch(`https://cookdinnerapi.herokuapp.com/recipes/${userID}`, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        return JSON.parse(response.recipes);
-    }
+    async getUser() {
+		api.get('/find_user/'+this.state.userId).then((response) => {
+			this.setState({user: response.data});
+		});
+	}
 
     constructor(props) {
-        super(props);
-        this.user = this.requestUser();
-        this.arrayRecipes = this.requestUserRecipes();
-    }
+		super(props);
+		if(AsyncStorage.getAllKeys().includes('openedProfile')){
+			AsyncStorage.getItem('openedProfile').then((response) => {
+				this.setState(response);
+			});
+		} else {
+			this.props.navigation.goBack();
+		}
+	}
+	
+	componentDidMount(){
+		this.getUser();
+	}
 
     render() {
         return (
             <View>
-                <Text>{this.user.Nome}</Text>
-                <Image source={{uri: `https://cookdinnerapi.herokuapp.com/getpic/${user.ID}`}} />
+                <Text>{this.state.user.name}</Text>
+                <Image source={{uri: `https://cookdinnerapi.herokuapp.com/get_pic/${this.state.userId}`}} />
                 <FlatList
-                    data={this.arrayRecipes}
+                    data={this.state.user.arrayRecipes}
                     renderItem={({ item }) => <FeedCard recipe={item} />}
                 />
             </View>

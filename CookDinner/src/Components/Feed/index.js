@@ -5,7 +5,7 @@ import Icon from 'react-native-fa-icons';
 import { Container, TopBar, SearchBar, NewRecipeButton } from './styles';
 import FeedCard from '../FeedCard';
 
-export default function Feed({searchValue, arrayRecipes, nav}) {
+export default function Feed({searchValue, requestSearch, arrayRecipes, nav}) {
 
     return (
         <Container>
