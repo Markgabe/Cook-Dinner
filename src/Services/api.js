@@ -1,17 +1,19 @@
 import axios from 'axios';
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage } from 'react-native';
 
-function getToken(){
-	let token = '';
-    AsyncStorage.getItem('token', (err, data) => {
-		if(!err) token = data;
+function getToken() {
+	AsyncStorage.getAllKeys().then(keys => {
+		if (keys.includes('token')) {
+			AsyncStorage.getItem('token').then(token => {
+				axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+			});
+		}
 	});
-    return token;
 }
 
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + getToken();
+getToken();
 const api = axios.create({
-	baseURL: "https://cookdinnerapi.herokuapp.com"
+	baseURL: 'https://cookdinnerapi.herokuapp.com'
 });
 
 export default api;

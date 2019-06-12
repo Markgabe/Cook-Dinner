@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Switch, AsyncStorage } from 'react-native';
 
-//import PicPopUp from '../PicPopUp';
+import PicPopUp from '../PicPopUp';
+import api from '../../Services/api';
 import {
 	Container,
 	ConfigCard,
@@ -12,7 +13,6 @@ import {
 	AvatarImage,
 	ChooseFileButton
 } from './styles';
-import api from '../../Services/api';
 
 export default class Menu extends Component {
 	static navigationsOptions = {
@@ -32,53 +32,63 @@ export default class Menu extends Component {
 		this.getPic();
 	}
 
-	setModalVisible(bool) {
-		this.setState({
-			modalVisible: bool
-		});
-	}
-
 	onControlChange(value) {
 		this.props.setDarkMode(!this.props.getDarkMode());
+	}
+
+	isModalVisible() {
+		return this.state.modalVisible;
 	}
 
 	async getPic() {
 		api.get('/cred').then(response => {
 			this.setState({
-				uri: `https://cookdinnerapi.herokuapp.com/getpic/${response.Id}`
+				uri: `https://cookdinnerapi.herokuapp.com/get_pic/${response.Id}`
 			});
 		});
 	}
 
 	render() {
 		return (
-			<Container>
-				<AvatarContainer>
-					<ChooseFileButton onPress={() => this.setModalVisible(true)}>
-						<AvatarImage source={{ uri: this.state.uri }} />
-					</ChooseFileButton>
-				</AvatarContainer>
+			<>
+				<Container pointerEvents={this.state.modalVisible ? 'none' : 'auto'}>
+					<AvatarContainer>
+						<ChooseFileButton
+							onPress={() => this.setState({ modalVisible: true })}
+						>
+							<AvatarImage source={{ uri: this.state.uri }} />
+						</ChooseFileButton>
+					</AvatarContainer>
 
-				<ConfigCard>
-					<ConfigText>
-						Dark mode: {this.props.getDarkMode() ? 'on' : 'off'}
-					</ConfigText>
-					<Switch
-						style={{ alignSelf: 'center', marginLeft: 'auto', marginRight: 10 }}
-						value={this.props.getDarkMode()}
-						onValueChange={this.onControlChange}
-					/>
-				</ConfigCard>
+					<ConfigCard>
+						<ConfigText>
+							Dark mode: {this.props.getDarkMode() ? 'on' : 'off'}
+						</ConfigText>
+						<Switch
+							style={{
+								alignSelf: 'center',
+								marginLeft: 'auto',
+								marginRight: 10
+							}}
+							value={this.props.getDarkMode()}
+							onValueChange={this.onControlChange}
+						/>
+					</ConfigCard>
 
-				<LogOutButton
-					onPress={() => {
-						AsyncStorage.setItem('token', '0');
-						this.props.navigation.navigate('SignIn');
-					}}
-				>
-					<LogOutText>Sair</LogOutText>
-				</LogOutButton>
-			</Container>
+					<LogOutButton
+						onPress={() => {
+							AsyncStorage.removeItem('token');
+							this.props.navigation.navigate('SignIn');
+						}}
+					>
+						<LogOutText>Sair</LogOutText>
+					</LogOutButton>
+				</Container>
+				<PicPopUp
+					visible={this.state.modalVisible}
+					onClose={() => this.setState({ modalVisible: false })}
+				/>
+			</>
 		);
 	}
 }

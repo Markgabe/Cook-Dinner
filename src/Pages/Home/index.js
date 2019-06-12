@@ -15,25 +15,21 @@ export default class Home extends Component {
 	};
 
 	state = {
-		screen: 0,
-		darkMode: false,
-		search: '',
-		arrayRecipes: []
+		screen: 1,
+		darkMode: false
 	};
 
 	constructor(props) {
 		super(props);
 		this.goToScreen = this.goToScreen.bind(this);
-		this.getDarkMode = this.getDarkMode.bind(this);
 		this.setDarkMode = this.setDarkMode.bind(this);
 	}
 
 	componentDidMount() {
-		this.getRecipes();
-		this.getDarkMode();
+		this.loadDarkMode();
 	}
 
-	async getDarkMode() {
+	async loadDarkMode() {
 		AsyncStorage.getItem('darkMode').then((err, data) => {
 			if (!err) {
 				this.setState({
@@ -41,24 +37,6 @@ export default class Home extends Component {
 				});
 			}
 		});
-	}
-
-	async getRecipes() {
-		api.get('/recipes').then(response => {
-			this.setState({ recipes: response.data });
-		});
-	}
-
-	async getSearch(search) {
-		api.get('/search/' + search).then(response => {
-			this.setState({
-				arrayRecipes: [{ Nome: 'piroca', Descrição: 'pesquisei' }]
-			});
-		});
-	}
-
-	getDarkMode() {
-		return this.state.darkMode;
 	}
 
 	setDarkMode(value) {
@@ -90,6 +68,7 @@ export default class Home extends Component {
 						horizontal={true}
 						directionalLockEnabled={true}
 						pagingEnabled={true}
+						initialScrollIndex={1}
 						onMomentumScrollEnd={event => {
 							this.setState({
 								screen: Math.round(event.nativeEvent.contentOffset.x / wp(100))
@@ -99,16 +78,11 @@ export default class Home extends Component {
 							this.scroll = input;
 						}}
 						data={[
-							<Feed
-								searchValue={this.state.search}
-								arrayRecipes={this.arrayRecipes}
-								requestSearch={this.getSearch}
-								nav={this.props.navigation.navigate}
-							/>,
-							<Notifications />,
 							<QRScreen />,
+							<Feed />,
+							<Notifications />,
 							<Menu
-								getDarkMode={this.getDarkMode}
+								getDarkMode={() => this.state.darkMode}
 								setDarkMode={this.setDarkMode}
 							/>
 						]}

@@ -3,6 +3,7 @@ import {
 	widthPercentageToDP as wp,
 	heightPercentageToDP as hp
 } from 'react-native-responsive-screen';
+
 export const Container = styled.View`
 	width: ${wp(100)};
 	height: 100%;
@@ -29,7 +30,7 @@ export const LogOutButton = styled.TouchableOpacity`
 	border-width: 1;
 	align-items: center;
 	justify-content: center;
-	margin-top: 30;
+	margin-top: auto;
 	width: 95%;
 	height: 50;
 	align-self: center;

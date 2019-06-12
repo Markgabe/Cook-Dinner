@@ -1,25 +1,33 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-	color: #fff;
+	background-color: #fff;
+	border-width: 1;
+	border-radius: 15;
 	align-self: center;
+	margin-top: 50%;
 `;
 
 export const Content = styled.TouchableOpacity`
-	border-width: 1;
-	border-color: #ccc;
-	padding-top: 20;
-	padding-bottom: 20;
+	padding-top: 30;
+	padding-bottom: 30;
+	padding-left: 20;
+	padding-right: 20;
 `;
 
 export const ButtonText = styled.Text`
-	font-size: 20;
+	font-size: 30;
 	align-self: center;
 	color: #555;
 `;
 
-export const TitleText = styled.Text`
-	font-size: 35;
-	font-weight: bold;
-	color: #000;
+export const ModalContainer = styled.View`
+	width: 100%;
+	height: 100%;
+`;
+
+export const Line = styled.View`
+	width: 100%;
+	height: 1;
+	background-color: #555;
 `;

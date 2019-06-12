@@ -32,3 +32,9 @@ export const NewRecipeButton = styled.TouchableOpacity`
 	margin-left: auto;
 	margin-right: 10;
 `;
+
+export const EmptyText = styled.Text`
+	font-size: 20;
+	color: #ccc;
+	align-self: center;
+`;
