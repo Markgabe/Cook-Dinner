@@ -7,7 +7,6 @@ import QRScreen from '../../Components/QRScreen';
 import Notifications from '../../Components/Notifications';
 import Menu from '../../Components/Menu';
 import Tabs from '../../Components/Tabs';
-import api from '../../Services/api';
 
 export default class Home extends Component {
 	static navigationOptions = {
@@ -84,6 +83,7 @@ export default class Home extends Component {
 							<Menu
 								getDarkMode={() => this.state.darkMode}
 								setDarkMode={this.setDarkMode}
+								nav={to => this.props.navigation.navigate(to)}
 							/>
 						]}
 						renderItem={({ item }) => item}

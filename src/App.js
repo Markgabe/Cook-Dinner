@@ -7,7 +7,6 @@ import {
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 import Home from './Pages/Home';
-import NewRecipe from './Pages/NewRecipe';
 import AuthLoadingScreen from './Pages/AuthLoadingScreen';
 import Recipe from './Pages/Recipe';
 import Profile from './Pages/Profile';
@@ -15,7 +14,6 @@ import Profile from './Pages/Profile';
 const AppStack = createStackNavigator(
 	{
 		Home: Home,
-		NewRecipe: NewRecipe,
 		Recipe: Recipe,
 		Profile: Profile
 	},

@@ -5,11 +5,10 @@ import { Container, Picture, Title, DescriptionBox, Content } from './styles';
 import ProfileCard from '../../Components/ProfileCard';
 import api from '../../Services/api';
 
-export default class Recipe extends Component{
-
-    static navigationOptions = { 
+export default class Recipe extends Component {
+	static navigationOptions = {
 		header: null
-	}
+	};
 
 	state = {
 		user: {
@@ -21,52 +20,55 @@ export default class Recipe extends Component{
 			name: '',
 			description: '',
 			portion: '',
-			time: 0,
+			time: 0
 		}
-	}
-    
-    async getUser(){
-		api.get('/find_user/'+user.id).then((response) => {
+	};
+
+	async getUser() {
+		api.get('/find_user/' + user.id).then(response => {
+			console.log(response);
 			this.setState({
 				user: response.data
 			});
 		});
-    }
+	}
 
-    async getRecipe(){
-        AsyncStorage.getItem('openedRecipe').then((response) => {
+	async getRecipe() {
+		AsyncStorage.getItem('openedRecipe').then(response => {
+			console.log(response);
 			this.setState({
 				recipe: response.data
 			});
 		});
-    }
-
-    constructor(props){
-        super(props);
-        
 	}
-	
-	componentDidMount(){
+
+	constructor(props) {
+		super(props);
+	}
+
+	componentDidMount() {
 		this.getUser();
-        this.getRecipe();
+		this.getRecipe();
 	}
 
-    render(){
-        
-        return(
-            <Container>
-                <Content>
-                    <Picture source={this.state.recipe['has_picture'] ? `https://cookdinnerapi.herokuapp.com/get_recipe_pic/${this.state.recipe.id}` : require('../../Assets/food_default.png')} />
-                    <Title>
-                        {this.state.recipe.name}
-                    </Title>
-                </Content>
-                <ProfileCard user={this.state.user}/>
-                <DescriptionBox>
-                    {this.state.recipe.description}
-                </DescriptionBox>
-            </Container>
-        );
-    }
-
+	render() {
+		return (
+			<Container>
+				<Content>
+					<Picture
+						source={
+							this.state.recipe['has_picture']
+								? `https://cookdinnerapi.herokuapp.com/get_recipe_pic/${
+										this.state.recipe.id
+								  }`
+								: require('../../Assets/food_default.png')
+						}
+					/>
+					<Title>{this.state.recipe.name}</Title>
+				</Content>
+				<ProfileCard user={this.state.user} />
+				<DescriptionBox>{this.state.recipe.description}</DescriptionBox>
+			</Container>
+		);
+	}
 }

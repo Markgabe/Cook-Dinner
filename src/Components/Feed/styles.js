@@ -37,4 +37,5 @@ export const EmptyText = styled.Text`
 	font-size: 20;
 	color: #ccc;
 	align-self: center;
+	margin-top: 50;
 `;

@@ -37,32 +37,37 @@ export default class Register extends Component {
 		this.setState({
 			loading: true
 		});
-		api
-			.post('/sign_up', {
-				username: this.state.username,
-				password: String(sha256(this.state.password)),
-				name: this.state.name
-			})
-			.then(response => {
-				this.setState({
-					loading: false
-				});
-				AsyncStorage.setItem('token', response.data['access-token']);
-				switch (response.status) {
-					case 200:
-						this.props.navigation.navigate('App');
-						break;
-					case 400:
-						alert('Preencha todos os campos para criar uma conta');
-						break;
-					case 401:
-						alert('Login ou senha inválidos');
-						break;
-					default:
-						alert('erro desconhecido, tente novamente mais tarde');
-						break;
-				}
-			});
+		let response = await api.post('/sign_up', {
+			username: this.state.username,
+			password: String(sha256(this.state.password)),
+			name: this.state.name
+		});
+		this.setState({
+			loading: false
+		});
+		console.log(response);
+		switch (response.status) {
+			case 200:
+				api.defaults.headers.common['Authorization'] =
+					response.data['access-token'];
+				await AsyncStorage.setItem('username', this.state.username);
+				await AsyncStorage.setItem(
+					'password',
+					String(sha256(this.state.password))
+				);
+
+				this.props.navigation.navigate('App');
+				break;
+			case 400:
+				alert('Preencha todos os campos para criar uma conta');
+				break;
+			case 401:
+				alert('Login ou senha inválidos');
+				break;
+			default:
+				alert('erro desconhecido, tente novamente mais tarde');
+				break;
+		}
 	}
 
 	render() {
@@ -87,7 +92,6 @@ export default class Register extends Component {
 						onChangeText={name => this.setState({ name })}
 						value={this.state.name}
 						returnKeyType="next"
-						autoCapitalize="none"
 						autoCorrect={false}
 						onSubmitEditing={() => {
 							this.secondTextInput.focus();

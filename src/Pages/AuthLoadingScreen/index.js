@@ -13,32 +13,54 @@ export default class AuthLoadingScreen extends Component {
 	state = {
 		expired: false,
 		didRequest: false,
-		loading: false
+		loading: false,
+		time: 0
 	};
 
 	constructor(props) {
 		super(props);
+
 		setInterval(() => {
 			this.setState({
-				expired: true
+				time: this.state.time + 1000
 			});
-		}, 10000);
+		}, 1000);
 	}
 
 	async validar() {
-		api.get('/cred').then(response => {
-			this.setState({
-				loading: false
-			});
-			if (this.state.expired) return;
-
-			if (response.status == 200) {
-				this.props.navigation.navigate('App');
-				return;
-			}
-			AsyncStorage.removeItem('token');
+		let user, pass;
+		let keys = await AsyncStorage.getAllKeys();
+		if (keys.includes('username') && keys.includes('password')) {
+			user = await AsyncStorage.getItem('username');
+			pass = await AsyncStorage.getItem('password');
+		} else {
 			this.props.navigation.navigate('SignIn');
-		});
+			return;
+		}
+
+		api
+			.post('/login', {
+				username: user,
+				password: pass
+			})
+			.then(response => {
+				if (this.state.time >= 15000) return;
+				this.setState({
+					loading: false
+				});
+				if (response.status == 200) {
+					api.defaults.headers.common['Authorization'] =
+						response.data['access-token'];
+
+					this.props.navigation.navigate('App');
+					return;
+				}
+				this.props.navigation.navigate('SignIn');
+			})
+			.catch(err => {
+				alert('Não foi possível conectar ao servidor');
+				this.props.navigation.navigate('SignIn');
+			});
 	}
 
 	componentDidMount() {
@@ -49,8 +71,7 @@ export default class AuthLoadingScreen extends Component {
 	}
 
 	render() {
-		if (this.state.expired) {
-			alert('Não foi possível conectar ao servidor');
+		if (this.state.time >= 15000) {
 			this.props.navigation.navigate('SignIn');
 		}
 

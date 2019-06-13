@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, AsyncStorage } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 
 import PicPopUp from '../PicPopUp';
 import api from '../../Services/api';
@@ -20,7 +21,9 @@ export default class Menu extends Component {
 	};
 
 	state = {
-		modalVisible: false
+		modalVisible: false,
+		uri: '',
+		userHasPic: false
 	};
 
 	constructor(props) {
@@ -41,11 +44,46 @@ export default class Menu extends Component {
 	}
 
 	async getPic() {
-		api.get('/cred').then(response => {
-			this.setState({
-				uri: `https://cookdinnerapi.herokuapp.com/get_pic/${response.Id}`
-			});
+		console.log('entrou');
+		const response = await api.get('/cred');
+		const user = await api.get('/find_user/' + response.id);
+		console.log(response, user);
+	}
+
+	chooseFile = () => {
+		var options = {
+			title: 'Escolha uma imagem',
+			cancelButtonTitle: 'Cancelar',
+			takePhotoButtonTitle: 'Tirar Foto...',
+			chooseFromLibraryButtonTitle: 'Escolher da Galeria...',
+			storageOptions: {
+				skipBackup: true,
+				path: 'images'
+			}
+		};
+		ImagePicker.showImagePicker(options, response => {
+			if (response.didCancel) {
+				console.log('User cancelled image picker');
+			} else if (response.error) {
+				console.log('ImagePicker Error: ', response.error);
+			} else {
+				this.setState({
+					uri: response.uri,
+					userHasPic: true
+				});
+				this.uploadPic(response);
+			}
 		});
+	};
+
+	uploadPic(pic) {
+		let form = new FormData();
+		form.append('picture', {
+			uri: pic.uri,
+			type: pic.type,
+			name: pic.fileName
+		});
+		api.post('/pic', form);
 	}
 
 	render() {
@@ -53,10 +91,14 @@ export default class Menu extends Component {
 			<>
 				<Container pointerEvents={this.state.modalVisible ? 'none' : 'auto'}>
 					<AvatarContainer>
-						<ChooseFileButton
-							onPress={() => this.setState({ modalVisible: true })}
-						>
-							<AvatarImage source={{ uri: this.state.uri }} />
+						<ChooseFileButton onPress={() => this.chooseFile()}>
+							<AvatarImage
+								source={
+									this.state.userHasPic
+										? { uri: this.state.uri }
+										: require('../../Assets/profile.png')
+								}
+							/>
 						</ChooseFileButton>
 					</AvatarContainer>
 
@@ -77,8 +119,11 @@ export default class Menu extends Component {
 
 					<LogOutButton
 						onPress={() => {
-							AsyncStorage.removeItem('token');
-							this.props.navigation.navigate('SignIn');
+							AsyncStorage.removeItem('username').then(
+								AsyncStorage.removeItem('password').then(() =>
+									this.props.nav('SignIn')
+								)
+							);
 						}}
 					>
 						<LogOutText>Sair</LogOutText>
@@ -87,6 +132,8 @@ export default class Menu extends Component {
 				<PicPopUp
 					visible={this.state.modalVisible}
 					onClose={() => this.setState({ modalVisible: false })}
+					type="user"
+					onFinished={() => {}}
 				/>
 			</>
 		);

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { AsyncStorage, Keyboard } from 'react-native';
 import { sha256 } from 'react-native-sha256';
-
 import api from '../../Services/api';
 import Logo from '../../Components/Logo';
 import {
@@ -36,29 +35,33 @@ export default class Login extends Component {
 		this.setState({
 			loading: true
 		});
-		api
-			.post('/login', {
-				username: this.state.username,
-				password: String(sha256(this.state.password))
-			})
-			.then(response => {
-				this.setState({
-					loading: false
-				});
+		let response = await api.post('/login', {
+			username: this.state.username,
+			password: String(sha256(this.state.password))
+		});
+		this.setState({
+			loading: false
+		});
+		console.log(response);
+		switch (response.status) {
+			case 200:
+				api.defaults.headers.common['Authorization'] =
+					response.data['access-token'];
+				await AsyncStorage.setItem('username', this.state.username);
+				await AsyncStorage.setItem(
+					'password',
+					String(sha256(this.state.password))
+				);
 
-				switch (response.status) {
-					case 200:
-						AsyncStorage.setItem('token', response.data['access-token']);
-						this.props.navigation.navigate('App');
-						break;
-					case 400:
-						alert('Por favor preencha todos os campos');
-						break;
-					case 401:
-						alert('Usuário ou senha inválidos');
-						break;
-				}
-			});
+				this.props.navigation.navigate('App');
+				break;
+			case 400:
+				alert('Por favor preencha todos os campos');
+				break;
+			case 401:
+				alert('Usuário ou senha inválidos');
+				break;
+		}
 	}
 
 	render() {

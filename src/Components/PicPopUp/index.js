@@ -1,35 +1,32 @@
 import React, { Component } from 'react';
 
-import { Modal } from 'react-native';
+import { Modal, AsyncStorage } from 'react-native';
 import ImageCropPicker from 'react-native-image-crop-picker';
 
 import { Container, Content, ButtonText, ModalContainer, Line } from './styles';
 import api from '../../Services/api';
-import Icon from 'react-native-fa-icons';
 
 export default class PicPopUp extends Component {
 	constructor(props) {
 		super(props);
 	}
 
-	chooseFile(type) {
+	async chooseFile(type) {
+		let image;
 		if (type == 'take') {
-			ImageCropPicker.openCamera({
+			image = await ImageCropPicker.openCamera({
 				width: 150,
 				height: 150,
 				cropping: true
-			}).then(image => {
-				this.uploadPic(image);
 			});
 		} else if (type == 'choose') {
-			ImageCropPicker.openPicker({
+			image = await ImageCropPicker.openPicker({
 				width: 150,
 				height: 150,
 				cropping: true
-			}).then(image => {
-				this.uploadPic(image);
 			});
 		}
+		this.uploadPic(image);
 		this.props.onClose();
 	}
 
@@ -40,7 +37,13 @@ export default class PicPopUp extends Component {
 			type: pic.type,
 			name: pic.fileName
 		});
-		api.post('/pic', form);
+		if (this.props.type == 'user') {
+			api.post('/pic', form);
+		} else {
+			AsyncStorage.setItem('image', JSON.stringify(pic)).then(() =>
+				this.props.onFinished()
+			);
+		}
 	}
 
 	render() {
